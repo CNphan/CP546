@@ -1,0 +1,39 @@
+include ../mixins/navigation.jade
+- user = typeof(user) != 'undefined' ? user : { }
+
+nav.navbar.navbar-default(role='navigation')
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle.collapsed.btn-xs(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+        span.sr-only Toggle navigation
+        span.glyphicon.glyphicon-th-list
+      a.navbar-brand(href='/') 
+        font(color='#cd610a')
+          b University
+        font(color='black')
+          b Manager
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-left
+        li
+          a(href='/catalog') 
+            span.glyphicon.glyphicon-book &nbsp;
+            | Fall 2014 Catalog         
+        block nav
+      ul.nav.navbar-nav.navbar-right
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown') 
+            | #{user.first} #{user.last} &nbsp;
+            span.glyphicon.glyphicon-user 
+            span.caret
+          ul.dropdown-menu(role='menu')
+            if(user.type == 'admin')
+              +adminNav()
+            else if (user.type == 'teacher')
+              +teacherNav()
+            else if (user.type == 'student')
+              +studentNav()
+            else
+              +navItem('/credentials/register', 'Register Today!')
+              li.divider
+              li 
+                +signIn()

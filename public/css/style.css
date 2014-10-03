@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+* {	
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.btn { 
+	border-color: #ba5809; 
+	background-color: #cd610a;
+}
+
+.btn:hover { 
+	border-color: #9d4803; 
+	background-color: #ba5809;
+}
