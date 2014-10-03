@@ -155,8 +155,8 @@ block content
 ### Page Linking
 The link structure will defined as such during development:
 * Home | [localhost:3000](http://localhost:3000)
-⋅⋅* Security: unrestricted
-⋅⋅* Display School Welcome & Information
+** Security: unrestricted
+** Display School Welcome & Information
 * Catalog | [localhost:3000/catalog](http://localhost:3000/catalog)
 ⋅⋅* Security: unrestricted
 ⋅⋅* Show current session by subject.
