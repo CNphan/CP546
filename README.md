@@ -47,6 +47,21 @@ This will be delivered using popular web technologies like HTML5, JavaScript, an
 * W3C | www.w3schools.com/css
 
 
+## End User Environments
+### Web Browsers
+* Mozilla Firefox
+* Chrome
+* Safari
+* Internet Explorer
+
+### Web Browser Operating Systems
+* Microsoft Windows
+* Apple OS
+* Apple iOS
+* Linux Distributions
+* Android
+ 
+
 ## Development Tools
 You can use a standard text editor to develop or you can use the Eclipse IDE.  Terminal commands are used to leverage the backend components.  
 
