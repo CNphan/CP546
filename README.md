@@ -154,76 +154,76 @@ block content
 
 ### Page Linking
 The link structure will defined as such during development:
-* Home | [localhost:3000](http://localhost:3000)
-  File: *index.jade*
-  Desc: *This page welcomes the user and should direct them to the catalog or to register. *
-  * Security: unrestricted
+* **Home** | [localhost:3000](http://localhost:3000)
+  * **File**: *index.jade*
+  * **Desc**: *This page welcomes the user and should direct them to the catalog or to register. *
+  * **Security**: unrestricted
   * Display School Welcome & Information
   
-* Catalog | [localhost:3000/catalog](http://localhost:3000/catalog)
-  File: *catalog.jade*
-  Desc: *This page displays the classes by each session(semester).*
-  * Security: unrestricted
+* **Catalog** | [localhost:3000/catalog](http://localhost:3000/catalog)
+  * **File**: *catalog.jade*
+  * **Desc**: *This page displays the classes by each session(semester).*
+  * **Security**: unrestricted
   * Show current session by subject.
   * If student show add class button if room exist.
   
-* My Schedule | [localhost:3000/catalog/schedule](http://localhost:3000/catalog/schedule)
-  File: *schedule.jade*
-  Desc: *This displays the teacher students classes currently assigned to them.  Students should see a drop class button for each class.  Teachers should see a Student Roll for each class.*
-  * Security: Teacher & Student Only
+* **My Schedule** | [localhost:3000/catalog/schedule](http://localhost:3000/catalog/schedule)
+  * **File**: *schedule.jade*
+  * **Desc**: *This displays the teacher students classes currently assigned to them.  Students should see a drop class button for each class.  Teachers should see a Student Roll for each class.*
+  * **Security**: Teacher & Student Only
   * There should be no profile difference.
   
-* Add Schedule | [localhost:3000/catalog/addschedule](http://localhost:3000/catalog/addschedule)
-  File: *addschedule.jade*
-  Desc: *This page allows administrators to assign a schedule to a class.*
-  * Security: Administrator Only
+* **Add Schedule** | [localhost:3000/catalog/addschedule](http://localhost:3000/catalog/addschedule)
+  * **File**: *addschedule.jade*
+  * **Desc**: *This page allows administrators to assign a schedule to a class.*
+  * **Security**: Administrator Only
   * Upon completion return to root page of process.
   * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* Add Class | [localhost:3000/catalog/addclass](http://localhost:3000/catalog/addclass)
-  File: *addclass.jade*
-  Desc: *This page allows administrators to create a class.*
-  * Security: Administrator Only
+* **Add Class** | [localhost:3000/catalog/addclass](http://localhost:3000/catalog/addclass)
+  * **File**: *addclass.jade*
+  * **Desc**: *This page allows administrators to create a class.*
+  * **Security**: Administrator Only
   * Upon completion return to root page of process.
   * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* Class Request | [localhost:3000/student/add](http://localhost:3000/student/add)
-  File: *addrequest.jade*
-  Desc: *This is a confirmation page, student reviews information and clicks add class button. Request is sent by catalog add class button only.*
-  * Security: Student Only
+* **Class Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
+  * **File**: *addrequest.jade*
+  * **Desc**: *This is a confirmation page, student reviews information and clicks add class button. Request is sent by catalog add class button only.*
+  * **Security**: Student Only
   * Upon completion return to catalog page.
   
-* Drop Class | [localhost:3000/student/drop](http://localhost:3000/student/drop)
-  File: *drop.jade*
-  Desc: *This is a confirmation page, student reviews information and clicks drop class button. Request is sent by schedule drop class button only.*
-  * Security: Teacher & Student Only
+* **Drop Class** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
+  * **File**: *drop.jade*
+  * **Desc**: *This is a confirmation page, student reviews information and clicks drop class button. Request is sent by schedule drop class button only.*
+  * **Security**: Teacher & Student Only
   * Upon completion return to My Schedule.
   
-* Student's History | [localhost:3000/student/history](http://localhost:3000/student/history)
-  File: *history.jade*
-  Desc: *View a students history of classes taken and organize by session(semester). Students and Administrators can see the grades received.*
-  * Security: All registered users.
+* **Student's History** | [localhost:3000/student/history](http://localhost:3000/student/history)
+  * **File**: *history.jade*
+  * **Desc**: *View a students history of classes taken and organize by session(semester). Students and Administrators can see the grades received.*
+  * **Security**: All registered users.
   
-* Profile | [localhost:3000/user](http://localhost:3000/user)
-  File: *user.jade*
-  Desc: *This shows the user profile.*
-  * Security: Registered Users
+* **Profile** | [localhost:3000/user](http://localhost:3000/user)
+  * **File**: *user.jade*
+  * **Desc**: *This shows the user profile.*
+  * **Security**: Registered Users
   
-* Register | [localhost:3000/credentials/register](http://localhost:3000/credentials/register)
-  File: *register.jade*
-  Desc: *This allows a student to create a new account or apply for the session(semester).*
-  * Security: unrestricted
+* **Register** | [localhost:3000/credentials/register](http://localhost:3000/credentials/register)
+  * **File**: *register.jade*
+  * **Desc**: *This allows a student to create a new account or apply for the session(semester).*
+  * **Security**: unrestricted
   
-* Add User | [localhost:3000/credentials/add](http://localhost:3000/credentials/add)
-  File: *adduser.jade*
-  Desc: *This page allows administrators to approve registration of students and add new user profiles.*
-  * Security: Administrator Only
+* **Add User** | [localhost:3000/credentials/add](http://localhost:3000/credentials/add)
+  * **File**: *adduser.jade*
+  * **Desc**: *This page allows administrators to approve registration of students and add new user profiles.*
+  * **Security**: Administrator Only
   * Upon form submit return to process.
   
-* De-Activate User | [localhost:3000/credentials/deactivate](http://localhost:3000/credentials/deactivate)
-  File: *deactivate.jade*
-  Desc: *This allows a administrator to deactivate a profiles authorization.*
-  * Security: Administrator Only
+* **De-Activate User** | [localhost:3000/credentials/deactivate](http://localhost:3000/credentials/deactivate)
+  * **File**: *deactivate.jade*
+  * **Desc**: *This allows a administrator to deactivate a profiles authorization.*
+  * **Security**: Administrator Only
   * Upon completion return to root page of process.
 
 ## Data Design
