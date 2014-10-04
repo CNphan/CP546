@@ -61,7 +61,6 @@ To add nodeeclipse to an existing installation of eclipse goto the application m
 ### Installing MongoDB
 
 
-
 ## Testing
 ### Unit Test
 Unit test will be done on processes that determine decisions with feature task.
@@ -72,87 +71,8 @@ Each task should be tested for correct and incorrect inputs where appropriate.
 ### System Test
 The system will be tested for all features under each profile.
 
- 
-## Template Design
-### Libraries In Use
-This project uses several CSS and JavaScript packages available to the public.  Instructions for using these an be found on their homepage.
-* Jquery 2.1.1 | www.jquery.com
-* Twitter Bootstrap | www.getbootstrap.com
 
-### Creating a page.
-When creating a page layout there are several things to remember.  You will load external resources by encapsulating in the appropriate Jade `block` tag.  Jade is structure based and requires proper indentation of code.  Indent space is a 2 character spacing and not the TAB key element.
-
-The templates assume they are placed at the root of the `\public\` directory.
-```jade
-
-// Begin Jade template.
-extends layout
-
-//-CSS is inserted in the HEAD tag.
-block css
-  
-//-JavaScript will be inserted at the end of the BODY tag.
-block js
-  
-//-Add navigation item to existing navigation set.
-block nav
-  
-//-Add navigation item to existing Administrator navigation set.
-block navAdmin
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
-  
-//-HTML content to display.
-block content
-  section#main.container
-    .row
-      //-Columns in a row must equal 12. 
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-
-// End Jade Template
-```
-
-#### Loading JavaScript Files
-If using self generated JavaScript you can load it using `block js`.  You have two options for loading JavaScript content.  You can use the SCRIPT tag or you can use the preferred method and include a `.js` file from the `public/js` directory folder.
-```jade
-
-block js
-  script 
-    //-code here
-  script(src='js/myfile.js') //-preferred
-```
-
-#### Loading CSS Files
-If using self generated css you can load it using `block css`.  You can include a `.css` file from the `public/css` directory folder.
-```jade
-
-block css
-  link(rel='stylesheet', href='/css/myfile.css')
-```
-
-#### Adding Navigation Link Items
-When adding navigation items you can use `+navItem()` for any profile `block nav*` tag.
-```jade
-
-block nav
-  +navItem('Item Name', 'link location')
-```
-
-#### Adding Content
-When adding html content to a page you need to use the correct encapsulation of section content and table alignment using the Twitter Bootstrap [Grid Options](http://getbootstrap.com/css/#grid-options).  Grid rows must have colums be equal to 12.
-```jade
-
-block content
-  section#main.container
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-```
-
-### Page Linking
+## Page Linking
 The link structure will defined as such during development:
 * **ALL PAGES**
   * **Data**: school, user
@@ -327,17 +247,18 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | state            | string value               | null        |
 | zip              | integer value              | null        |
 
-### User Stories
-#### Format
+
+## Scope Refinement
+### User Stories Format
 > " As a -role-, I want -goal/desire- so that -benefit-"
 Benefit is optional.
 
-#### Assumptions Made
+### Assumptions Made
 1. Professors can be generalized to the term "teacher".
 2. Want schedules and class registration managed above all.
 3. Semester can be generalized as "session".
 
-#### User Vision Broken Down to User Stories
+### User Vision Broken Down to User Stories
 1. Students will use their PCs to log into the system and request classes.
   1. As a student, I want sign in from my home personal computing device.
   2. As a student, I want to request to register for university sessions.
@@ -390,28 +311,28 @@ Benefit is optional.
 
 **Derived User Stories Total**: 33
  
-#### Refine User Stories, Assign & Prioritize Task List
-1. Learn
+### Refine User Stories, Assign & Prioritize Task List
+1. **Learn**
   1. Team needs to learn about Node.js with Express.js.
   2. Team needs to learn about Jade Templates for Node.js.
   3. Break down product owner's vision into user stories.
   4. Get Team situated with development environment and launch base template on local machine.
 
-2. Testing
+2. **Testing**
   1. As a developer, I want to run unit test on all native application data object operations on the back-end.
   2. As a scrum master, want functional test to be run on all site pages.
   3. As a scrum master, I want all system features tested in the development environment and the go live environment.
 
-3. University Profiles
+3. **University Profiles**
   1. As a administrator, I want to add a user account.
   2. As a student, I want to request to register for university sessions.
   3. As a administrator, I want to authorize a students registration application.
 
-4. Profile Types
+4. **Profile Types**
   1. As a administrator, I want to assign a users profile password.
   2. As a administrator, I want deactivate a user profiles authorization.
 
-5. Courses
+5. **Courses**
   1. As a administrator, I want to add new courses.
   2. As a student, I want to request addition to course roll.
   3. As a student, I want to drop a course.
@@ -419,119 +340,199 @@ Benefit is optional.
   5. As a teacher, I want to see my course student roll.
   6. As a administrator, I want assign courses to all degree majors.
 
-6. Schedule
+6. **Schedule**
   1. As a administrator, I want to enter a course schedule.
   2. As a administrator, I want course schedules to be assigned to a course.
   3. As a student, I want to see my current course schedule.
   4. As a teacher, I want to see a students current course schedule.
 
-7. Back-end
+7. **Back-end**
   1. As a system, It should not allow a users history to be deleted.
   2. As a system, it should restrict students from registering if prerequisites have not been taken.
 
-8. History
+8. **History**
   1. As a teacher, I want to view the students class history.
   2. As a student, I want to see my class history.
   3. As a administrator, I want to view a students transcripts.  
 
-9. Front-end Views
+9. **Front-end Views**
   1. As a student, I want sign in from my home personal computing device.
 
-10. Front-end Features
+10. **Front-end Features**
   1. As a student, I want to see the number of seats a course has and how many are available.
   2. As a system, it should not allow a student to add classes with no seats remaining.
   3. As a system, it should not allow a student to drop after the 2nd week of a session.
   4. As a student, I would like to sort my class history by semester.
 
-11. Grades
+11. **Grades**
   1. As a teacher, I want to enter student grades.
   2. As a student, I would like to see my posted grades with my class history.
   3. As a administrator, I want to view a students history and grades earned.
 
-12. Grade Level
+12. **Grade Level**
   1. As a system, it should define grade levels as freshman, sophomore, junior, senior.
   2. As a system, it should updates students grade level.
   3. As a system, it should only authorize grade level for successfully completed courses only.
   4. As a system, it should perform graduation check.
   5. As a system, it should define a graduation check by checking course completion against their assigned degree.
 
-#### Refine Task Scope For Sprint Work Products
-1. Learn
+### Refine Task Scope For Sprint Work Products
+1. **Learn**
   1. Team needs to learn about Node.js with Express.js.
   2. Team needs to learn about Jade Templates for Node.js.
   3. Break down product owner's vision into user stories.
   4. Get Team situated with development environment and launch base template on local machine.
 
-2. Testing
+2. **Testing**
   1. As a developer, I want to run unit test on all native application data object operations on the back-end.
   2. As a scrum master, want functional test to be run on all site pages.
   3. As a scrum master, I want all system features tested in the development environment and the go live environment.
 
-3. University Profiles
+3. **University Profiles**
   1. As a administrator, I want to add a user account.
   2. As a student, I want to request to register for university sessions.
   3. As a administrator, I want to authorize a students registration application.
 
-4. Profile Types
+4. **Profile Types**
   1. As a administrator, I want to assign a users profile password.
   2. As a administrator, I want deactivate a user profiles authorization.
 
-5. Courses
+5. **Courses**
   1. As a administrator, I want to add new courses.
   2. As a student, I want to request addition to course roll.
   3. As a student, I want to drop a course.
   4. As a teacher, I want to drop a student from my course.
   5. As a teacher, I want to see my course student roll.
 
-6. Schedule
+6. **Schedule**
   1. As a administrator, I want to enter a course schedule.
   2. As a administrator, I want course schedules to be assigned to a course.
   3. As a student, I want to see my current course schedule.
   4. As a teacher, I want to see a students current course schedule.
 
-7. Back-end
+7. **Back-end**
   1. As a system, It should not allow a users history to be deleted.
 
-8. History
+8. **History**
   1. As a teacher, I want to view the students class history.
   2. As a student, I want to see my class history.
   3. As a administrator, I want to view a students transcripts.  
 
-9. Front-end Views
+9. **Front-end Views**
   1. As a student, I want sign in from my home personal computing device.
 
-10. Front-end Features
+10. **Front-end Features**
   1. As a student, I want to see the number of seats a course has and how many are available.
   2. As a system, it should not allow a student to add classes with no seats remaining.
   3. As a system, it should not allow a student to drop after the 2nd week of a session.
   4. As a student, I would like to sort my class history by semester.
   
-##### Sprint One
-* Learn
+#### Sprint One
+* **Learn**
 * Create visual prototype for these task:
-  * Front-end Views
-  * University Profiles
-  * Courses
-  * Schedule
-  * History
-  * Front-end Features
-* Testing
+  * **Front-end Views**
+  * **University Profiles**
+  * **Courses**
+  * **Schedule**
+  * **History**
+  * **Front-end Features**
+* **Testing**
 
-##### Sprint Two
-* Back-end
+#### Sprint Two
+* **Back-end**
 * For the following bind data objects to visual interface.  Code logic not having to do with POST operations but prepare where possible.
-  * University Profiles
-  * Profile Types
-  * Course
-  * Schedule
-  * History
-  * Front-end Features
-* Testing
+  * **University Profiles**
+  * **Profile Types**
+  * **Course**
+  * **Schedule**
+  * **History**
+  * **Front-end Features**
+* **Testing**
 
-##### Sprint Three
+#### Sprint Three
 * Create POST logic for:
-  * University Profiles
-  * Profile Types
-  * Course
-  * Schedule
-* Testing
+  * **University Profiles**
+  * **Profile Types**
+  * **Course**
+  * **Schedule**
+* **Testing**
+
+ 
+## Template Design
+### Libraries In Use
+This project uses several CSS and JavaScript packages available to the public.  Instructions for using these an be found on their homepage.
+* Jquery 2.1.1 | www.jquery.com
+* Twitter Bootstrap | www.getbootstrap.com
+
+### Creating a page.
+When creating a page layout there are several things to remember.  You will load external resources by encapsulating in the appropriate Jade `block` tag.  Jade is structure based and requires proper indentation of code.  Indent space is a 2 character spacing and not the TAB key element.
+
+The templates assume they are placed at the root of the `\public\` directory.
+```jade
+
+// Begin Jade template.
+extends layout
+
+//-CSS is inserted in the HEAD tag.
+block css
+  
+//-JavaScript will be inserted at the end of the BODY tag.
+block js
+  
+//-Add navigation item to existing navigation set.
+block nav
+  
+//-Add navigation item to existing Administrator navigation set.
+block navAdmin
+  
+//-Add navigation item to existing Teacher navigation set.
+block navTeacher
+  
+//-Add navigation item to existing Student navigation set.
+block navStudent
+  
+//-HTML content to display.
+block content
+  section#main.container
+    .row
+      //-Columns in a row must equal 12. 
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+
+// End Jade Template
+```
+
+#### Loading JavaScript Files
+If using self generated JavaScript you can load it using `block js`.  You have two options for loading JavaScript content.  You can use the SCRIPT tag or you can use the preferred method and include a `.js` file from the `public/js` directory folder.
+```jade
+
+block js
+  script 
+    //-code here
+  script(src='js/myfile.js') //-preferred
+```
+
+#### Loading CSS Files
+If using self generated css you can load it using `block css`.  You can include a `.css` file from the `public/css` directory folder.
+```jade
+
+block css
+  link(rel='stylesheet', href='/css/myfile.css')
+```
+
+#### Adding Navigation Link Items
+When adding navigation items you can use `+navItem()` for any profile `block nav*` tag.
+```jade
+
+block nav
+  +navItem('Item Name', 'link location')
+```
+
+#### Adding Content
+When adding html content to a page you need to use the correct encapsulation of section content and table alignment using the Twitter Bootstrap [Grid Options](http://getbootstrap.com/css/#grid-options).  Grid rows must have colums be equal to 12.
+```jade
+
+block content
+  section#main.container
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+```
