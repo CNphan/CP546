@@ -168,7 +168,7 @@ The link structure will defined as such during development:
   * **File**: *catalog.jade*
   * **Desc**: This page displays the classes by each session(semester).
   * **Security**: unrestricted
-  * **Data**: catalog[array]
+  * **Data**: schedule[array]
   * **Notes**
     * Show current session by subject.
     * If student show add class button if room exist.
@@ -185,7 +185,7 @@ The link structure will defined as such during development:
   * **File**: *addschedule.jade*
   * **Desc**: This page allows administrators to assign a schedule to a class.
   * **Security**: Administrator Only
-  * **Data**: sections[array]
+  * **Data**: course[array]
   * **Notes**
     * Upon completion return to root page of process.
     * See [Data](#data-design) Design to understand the best way to manipulate data.
@@ -243,7 +243,8 @@ The link structure will defined as such during development:
   * **File**: *deactivate.jade*
   * **Desc**: This allows a administrator to deactivate a profiles authorization.
   * **Security**: Administrator Only
-  * Upon completion return to root page of process.
+  * **Notes**
+    * Upon completion return to root page of process.
 
 ## Data Design
 Node.js and MongoDB both work with JSON data by default.  Data stores passed to the template will be processes this way.  Data passed to the templates is defined as follows.
@@ -257,8 +258,9 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | type             |  default : student : teacher : admin   | default     |
 | first            |  string value                          | Guest       |
 | last             |  string value                          | User        |
-| isRegistered     |  true : false                          | false       |
 | isActive         |  true : false                          | false       |
+| isRegistered     |  true : false                          | false       |
+| gradeLevel       |  true : false                          | false       |
  
 ### Class Schedule Objects
 **Value name passed to template** : session
@@ -274,7 +276,6 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | Value            | Option                                | Default     |
 | ---------------- |:-------------------------------------:| -----------:|
 | session          | session object                        | null        |
-| subject          | subject object                        | null        |
 | section          | section object                        | null        |
 | dailyMeeting     | daily object                          | null        |
 | startTime        | date object                           | null        |
@@ -294,22 +295,22 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | fri              |  true : false                        | false       |
 | sat              |  true : false                        | false       |
 
+**Value name passed to template** : course
+
+| Value            | Option                               | Default     |
+| ---------------- |:------------------------------------:| -----------:|
+| code             | 3 char : string value                | null        |
+| name             | string value                         | null        |
+| description      | string value                         | null        |
+| subject          | subject object                       | null        |
+
 **Value name passed to template** : subject
 
-| Value            | Option                               | Default     |
-| ---------------- |:------------------------------------:| -----------:|
-| code             |  3 char : string value               | null        |
-| name             |  string value                        | null        |
-| description      |  string value                        | null        |
-
-
-**Value name passed to template** : section
-
-| Value            | Option                               | Default     |
-| ---------------- |:------------------------------------:| -----------:|
-| code             |  3 char : string value               | null        |
-| name             |  string value                        | null        |
-| description      |  string value                        | null        |
+| Value            | Option                              | Default     |
+| ---------------- |:-----------------------------------:| -----------:|
+| code             | 3 char : string value               | null        |
+| name             | string value                        | null        |
+| description      | string value                        | null        |
 
 
 ### School Profile
@@ -331,20 +332,19 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 > " As a -role-, I want -goal/desire- so that -benefit-"
 Benefit is optional.
 
-#### Assumptions
+#### Assumptions Made
 1. Professors can be generalized to the term "teacher".
 2. Want schedules and class registration managed above all.
 3. Semester can be generalized as "session".
 
-#### User Vision Broken Down
+#### User Vision Broken Down to User Stories
 1. Students will use their PCs to log into the system and request classes.
   1. As a student, I want sign in from my home personal computing device.
   2. As a student, I want to request to register for university sessions.
   3. As a student, I want to request addition to class roll.
 2. Students will display the number of openings (which may be none) of all sections of a course, and select one of the open sections. 
-  1. As a student, I want to request addition to class roll.
-  2. As a student, I want to see the number of seats a class has and how many are available.
-  3. As a system, it should not allow a student to add classes with no seats remaining.
+  1. As a student, I want to see the number of seats a class has and how many are available.
+  2. As a system, it should not allow a student to add classes with no seats remaining.
 3. Students will drop courses, but only before the second week of classes.
   1. As a student, I want to drop a class.
   2. As a system, it should not allow a student to drop after the 2nd week of a session.
@@ -388,124 +388,150 @@ Benefit is optional.
   1. As a administrator, I want to view a students transcripts.  
   2. As a administrator, I want to view a students history and grades earned.
 
-#### Derived User Stories
-**Total**: 34
-1. As a student, I want to request addition to class roll.
+**Derived User Stories Total**: 33
+ 
+#### Refine User Stories, Assign & Prioritize Task List
+1. Learn
+  1. Team needs to learn about Node.js with Express.js.
+  2. Team needs to learn about Jade Templates for Node.js.
+  3. Break down product owner's vision into user stories.
+  4. Get Team situated with development environment and launch base template on local machine.
 
-2. As a student, I want to see the number of seats a class has and how many are available.
+2. Testing
+  1. As a developer, I want to run unit test on all native application data object operations on the back-end.
+  2. As a scrum master, want functional test to be run on all site pages.
+  3. As a scrum master, I want all system features tested in the development environment and the go live environment.
 
-3. As a system, it should not allow a student to add classes with no seats remaining.
-
-4. As a student, I want to drop a class.
-
-5. As a system, it should not allow a student to drop after the 2nd week of a session.
-
-6. As a student, I want to see my current schedule.
-
-7. As a student, I want to see my class history.
-
-8. As a student, I would like to see my posted grades with my class history.
-
-9. As a student, I would like to sort my class history by semester.
-
-10. As a system, it should restrict students from registering if prerequisites have not been taken.
-
-11. As a teacher, I want to see my class roll.
-
-12. As a teacher, I want to see a students current schedule.
-
-13. As a teacher, I want to view the students class history.
-
-14. As a teacher, I want to drop a student.
-
-15. As a teacher, I want to enter student grades.
-
-16. As a administrator, I want to add a user account.
-
-17. As a administrator, I want to authorize user profiles status at the university.
-
-18. As a administrator, I want to assign a users profile password.
-
-19. As a administrator, I want deactivate a user profiles authorization.
-
-20. As a system, It should not allow a users history to be deleted.
-
-21. As a administrator, I want to enter a class schedule.
-
-22. As a administrator, I want class schedules to be assigned to a session.
-
-23. As a administrator, I want to add new courses.
-
-24. As a administrator, I want assign courses to all degree majors.
-
-25. As a system, it should updates students grade status.
-
-26. As a system, it should define grade status freshman, sophomore, junior, senior.
-
-27. As a system, it should only authorize grade status for successfully completed courses.
-
-28. As a system, it should perform graduation check.
-
-29. As a system, it should define a graduation check by checking course completion against their assigned degree.
-
-30. As a student, I want sign in from my home personal computing device.
-
-31. As a student, I want to request to register for university sessions.
-
-32. As a student, I want to request addition to class roll.
-
-33. As a administrator, I want to view a students transcripts.  
-
-34. As a administrator, I want to view a students history and grades earned.
-
-#### Task Creation
-1. Credentials
-  1. As a system, it should updates students grade status.
-  2. As a system, it should define grade status freshman, sophomore, junior, senior.
-  3. As a student, I want to request to register for university sessions.
-  4. As a administrator, I want to add a user account.
-  5. As a administrator, I want to authorize user profiles status at the university.
-  6. As a administrator, I want to assign a users profile password. 
-  7. As a administrator, I want deactivate a user profiles authorization.
-2. Catalog
-  1. As a administrator, I want class schedules to be assigned to a session.
-  2. As a administrator, I want assign courses to all degree majors.
-3. Course
-4. My Schedule
-5. Front-end
-  1. As a student, I want sign in from my home personal computing device.
-6. Back-end
-  1. As a system, it should perform graduation check.
-  2. As a system, it should define a graduation check by checking course completion against their assigned degree.
-  3. As a system, it should updates students grade status.
-  4. As a system, it should define grade status freshman, sophomore, junior, senior.
-  5. As a system, it should only authorize grade status for successfully completed courses.
-  6. As a system, It should not allow a users history to be deleted.
-  7. As a system, it should restrict students from registering if prerequisites have not been taken.
-  8. As a system, it should not allow a student to add classes with no seats remaining.
-  9. As a system, it should not allow a student to drop after the 2nd week of a session.
-7. Student
-  1. As a student, I want sign in from my home personal computing device.
+3. University Profiles
+  1. As a administrator, I want to add a user account.
   2. As a student, I want to request to register for university sessions.
-  3. As a student, I want to request addition to class roll.
-  4. As a student, I want to see the number of seats a class has and how many are available.
-  5. As a student, I want to drop a class.
-  6. As a student, I want to see my current schedule.
-  7. As a student, I want to see my class history.
-  8. As a student, I would like to see my posted grades with my class history.
-  9. As a student, I would like to sort my class history by semester.
-8. Administrator
-  1. As a administrator, I want assign courses to all degree majors.
-  2. As a administrator, I want to enter a class schedule.
-  3. As a administrator, I want to add new courses.
-  4. As a administrator, I want deactivate a user profiles authorization.
-  5. As a administrator, I want to add a user account.
-  6. As a administrator, I want to authorize user profiles status at the university.
-  7. As a administrator, I want to assign a users profile password.
-9. Teacher
-  1. As a teacher, I want to see my class roll.
-  2. As a teacher, I want to see a students current schedule.
-  3. As a teacher, I want to view the students class history.
-  4. As a teacher, I want to drop a student.
-  5. As a teacher, I want to enter student grades.
-10. Posting Data
+  3. As a administrator, I want to authorize a students registration application.
+
+4. Profile Types
+  1. As a administrator, I want to assign a users profile password.
+  2. As a administrator, I want deactivate a user profiles authorization.
+
+5. Courses
+  1. As a administrator, I want to add new courses.
+  2. As a student, I want to request addition to course roll.
+  3. As a student, I want to drop a course.
+  4. As a teacher, I want to drop a student from my course.
+  5. As a teacher, I want to see my course student roll.
+  6. As a administrator, I want assign courses to all degree majors.
+
+6. Schedule
+  1. As a administrator, I want to enter a course schedule.
+  2. As a administrator, I want course schedules to be assigned to a course.
+  3. As a student, I want to see my current course schedule.
+  4. As a teacher, I want to see a students current course schedule.
+
+7. Back-end
+  1. As a system, It should not allow a users history to be deleted.
+  2. As a system, it should restrict students from registering if prerequisites have not been taken.
+
+8. History
+  1. As a teacher, I want to view the students class history.
+  2. As a student, I want to see my class history.
+  3. As a administrator, I want to view a students transcripts.  
+
+9. Front-end Views
+  1. As a student, I want sign in from my home personal computing device.
+
+10. Front-end Features
+  1. As a student, I want to see the number of seats a course has and how many are available.
+  2. As a system, it should not allow a student to add classes with no seats remaining.
+  3. As a system, it should not allow a student to drop after the 2nd week of a session.
+  4. As a student, I would like to sort my class history by semester.
+
+11. Grades
+  1. As a teacher, I want to enter student grades.
+  2. As a student, I would like to see my posted grades with my class history.
+  3. As a administrator, I want to view a students history and grades earned.
+
+12. Grade Level
+  1. As a system, it should define grade levels as freshman, sophomore, junior, senior.
+  2. As a system, it should updates students grade level.
+  3. As a system, it should only authorize grade level for successfully completed courses only.
+  4. As a system, it should perform graduation check.
+  5. As a system, it should define a graduation check by checking course completion against their assigned degree.
+
+#### Refine Task Scope For Sprint Work Products
+1. Learn
+  1. Team needs to learn about Node.js with Express.js.
+  2. Team needs to learn about Jade Templates for Node.js.
+  3. Break down product owner's vision into user stories.
+  4. Get Team situated with development environment and launch base template on local machine.
+
+2. Testing
+  1. As a developer, I want to run unit test on all native application data object operations on the back-end.
+  2. As a scrum master, want functional test to be run on all site pages.
+  3. As a scrum master, I want all system features tested in the development environment and the go live environment.
+
+3. University Profiles
+  1. As a administrator, I want to add a user account.
+  2. As a student, I want to request to register for university sessions.
+  3. As a administrator, I want to authorize a students registration application.
+
+4. Profile Types
+  1. As a administrator, I want to assign a users profile password.
+  2. As a administrator, I want deactivate a user profiles authorization.
+
+5. Courses
+  1. As a administrator, I want to add new courses.
+  2. As a student, I want to request addition to course roll.
+  3. As a student, I want to drop a course.
+  4. As a teacher, I want to drop a student from my course.
+  5. As a teacher, I want to see my course student roll.
+
+6. Schedule
+  1. As a administrator, I want to enter a course schedule.
+  2. As a administrator, I want course schedules to be assigned to a course.
+  3. As a student, I want to see my current course schedule.
+  4. As a teacher, I want to see a students current course schedule.
+
+7. Back-end
+  1. As a system, It should not allow a users history to be deleted.
+
+8. History
+  1. As a teacher, I want to view the students class history.
+  2. As a student, I want to see my class history.
+  3. As a administrator, I want to view a students transcripts.  
+
+9. Front-end Views
+  1. As a student, I want sign in from my home personal computing device.
+
+10. Front-end Features
+  1. As a student, I want to see the number of seats a course has and how many are available.
+  2. As a system, it should not allow a student to add classes with no seats remaining.
+  3. As a system, it should not allow a student to drop after the 2nd week of a session.
+  4. As a student, I would like to sort my class history by semester.
+  
+##### Sprint One
+* Learn
+* Create visual prototype for these task:
+  * Front-end Views
+  * University Profiles
+  * Courses
+  * Schedule
+  * History
+  * Front-end Features
+* Testing
+
+##### Sprint Two
+* Back-end
+* For the following bind data objects to visual interface.  Code logic not having to do with POST operations but prepare where possible.
+  * University Profiles
+  * Profile Types
+  * Course
+  * Schedule
+  * History
+  * Front-end Features
+* Testing
+
+##### Sprint Three
+* Create POST logic for:
+  * University Profiles
+  * Profile Types
+  * Course
+  * Schedule
+* Testing
