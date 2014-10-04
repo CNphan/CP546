@@ -154,117 +154,135 @@ block content
 
 ### Page Linking
 The link structure will defined as such during development:
+* **ALL PAGES**
+  * **Data**: school, user
+  
 * **Home** | [localhost:3000](http://localhost:3000)
   * **File**: *index.jade*
-  * **Desc**: *This page welcomes the user and should direct them to the catalog or to register. *
+  * **Desc**: This page welcomes the user and should direct them to the catalog or to register.
   * **Security**: unrestricted
-  * Display School Welcome & Information
+  * **Notes**
+    * Display School Welcome & Information
   
 * **Catalog** | [localhost:3000/catalog](http://localhost:3000/catalog)
   * **File**: *catalog.jade*
-  * **Desc**: *This page displays the classes by each session(semester).*
+  * **Desc**: This page displays the classes by each session(semester).
   * **Security**: unrestricted
-  * Show current session by subject.
-  * If student show add class button if room exist.
+  * **Data**: catalog[array]
+  * **Notes**
+    * Show current session by subject.
+    * If student show add class button if room exist.
   
 * **My Schedule** | [localhost:3000/catalog/schedule](http://localhost:3000/catalog/schedule)
   * **File**: *schedule.jade*
-  * **Desc**: *This displays the teacher students classes currently assigned to them.  Students should see a drop class button for each class.  Teachers should see a Student Roll for each class.*
+  * **Desc**: This displays the teacher students classes currently assigned to them.  Students should see a drop class button for each class.  Teachers should see a Student Roll for each class.
   * **Security**: Teacher & Student Only
-  * There should be no profile difference.
+  * **Data**: schedule[array]
+  * **Notes**
+    * There should be no profile difference.
   
 * **Add Schedule** | [localhost:3000/catalog/addschedule](http://localhost:3000/catalog/addschedule)
   * **File**: *addschedule.jade*
-  * **Desc**: *This page allows administrators to assign a schedule to a class.*
+  * **Desc**: This page allows administrators to assign a schedule to a class.
   * **Security**: Administrator Only
-  * Upon completion return to root page of process.
-  * See [Data](#data-design) Design to understand the best way to manipulate data.
+  * **Data**: sections[array]
+  * **Notes**
+    * Upon completion return to root page of process.
+    * See [Data](#data-design) Design to understand the best way to manipulate data.
   
 * **Add Class** | [localhost:3000/catalog/addclass](http://localhost:3000/catalog/addclass)
   * **File**: *addclass.jade*
-  * **Desc**: *This page allows administrators to create a class.*
+  * **Desc**: This page allows administrators to create a class.
   * **Security**: Administrator Only
-  * Upon completion return to root page of process.
-  * See [Data](#data-design) Design to understand the best way to manipulate data.
+  * **Data**: subject[array]
+  * **Notes**
+    * Upon completion return to root page of process.
+    * See [Data](#data-design) Design to understand the best way to manipulate data.
   
 * **Class Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
   * **File**: *addrequest.jade*
-  * **Desc**: *This is a confirmation page, student reviews information and clicks add class button. Request is sent by catalog add class button only.*
+  * **Desc**: This is a confirmation page, student reviews information and clicks add class button. Request is sent by catalog add class button only.
   * **Security**: Student Only
-  * Upon completion return to catalog page.
+  * **Data**: schedule 
+  * **Notes**
+    * Upon completion return to catalog page.
   
 * **Drop Class** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
   * **File**: *drop.jade*
-  * **Desc**: *This is a confirmation page, student reviews information and clicks drop class button. Request is sent by schedule drop class button only.*
+  * **Desc**: This is a confirmation page, student reviews information and clicks drop class button. Request is sent by schedule drop class button only.
   * **Security**: Teacher & Student Only
-  * Upon completion return to My Schedule.
+  * **Data**: schedule 
+  * **Notes**
+    * Upon completion return to My Schedule.
   
 * **Student's History** | [localhost:3000/student/history](http://localhost:3000/student/history)
   * **File**: *history.jade*
-  * **Desc**: *View a students history of classes taken and organize by session(semester). Students and Administrators can see the grades received.*
+  * **Desc**: View a students history of classes taken and organize by session(semester). 
+  * **Data**: schedule[array]
   * **Security**: All registered users.
   
-* **Profile** | [localhost:3000/user](http://localhost:3000/user)
+* **Profile** | [localhost:3000/user/:id](http://localhost:3000/user/:id)
   * **File**: *user.jade*
-  * **Desc**: *This shows the user profile.*
+  * **Desc**: This shows the user profile.
   * **Security**: Registered Users
   
 * **Register** | [localhost:3000/credentials/register](http://localhost:3000/credentials/register)
   * **File**: *register.jade*
-  * **Desc**: *This allows a student to create a new account or apply for the session(semester).*
+  * **Desc**: This allows a student to create a new account or apply for the session(semester).
   * **Security**: unrestricted
   
 * **Add User** | [localhost:3000/credentials/add](http://localhost:3000/credentials/add)
   * **File**: *adduser.jade*
-  * **Desc**: *This page allows administrators to approve registration of students and add new user profiles.*
+  * **Desc**: This page allows administrators to approve registration of students and add new user profiles.
   * **Security**: Administrator Only
-  * Upon form submit return to process.
+  * **Data**: user[array]
+  * **Notes**
+    * Upon form submit return to process.
   
 * **De-Activate User** | [localhost:3000/credentials/deactivate](http://localhost:3000/credentials/deactivate)
   * **File**: *deactivate.jade*
-  * **Desc**: *This allows a administrator to deactivate a profiles authorization.*
+  * **Desc**: This allows a administrator to deactivate a profiles authorization.
   * **Security**: Administrator Only
   * Upon completion return to root page of process.
 
 ## Data Design
 Node.js and MongoDB both work with JSON data by default.  Data stores passed to the template will be processes this way.  Data passed to the templates is defined as follows.
 
-### User Profile
+### User Profile Objects
 **Value name passed to template** : user
 
-| Value            | Option                               | Default     |
-| ---------------- |:------------------------------------:| -----------:|
-| id               |  16 digit alpha / numeric assign key | null        |
-| type             |  default : student : teacher : admin | default     |
-| first            |  string value                        | Guest       |
-| last             |  string value                        | User        |
-| isActive         |  true : false                        | false       |
+| Value            | Option                                 | Default     |
+| ---------------- |:--------------------------------------:| -----------:|
+| id               |  16 digit alpha / numeric assigned key | null        |
+| type             |  default : student : teacher : admin   | default     |
+| first            |  string value                          | Guest       |
+| last             |  string value                          | User        |
+| isRegistered     |  true : false                          | false       |
+| isActive         |  true : false                          | false       |
  
-### Class Schedule
-**Value name passed to template** : classSession[int] where int is the record number as an integer.
+### Class Schedule Objects
+**Value name passed to template** : session
 
 | Value            | Option                                     | Default     |
 | ---------------- |:------------------------------------------:| -----------:|
 | code             | 2 digit month - 2 digit year - length code | null        |
-| startDate        |                                            | null        |
-| endDate          |                                            | null        |
+| startDate        | date object                                | null        |
+| endDate          | date object                                | null        |
 
-**Value name passed to template** : schedule[int] where int is the record number as an integer.
+**Value name passed to template** : schedule
 
 | Value            | Option                                | Default     |
 | ---------------- |:-------------------------------------:| -----------:|
-| session          | classSession[int]                     | null        |
-| classCode        | int                                   | null        |
-| subjectCode      | scheduleSubject[int]                  | null        |
-| className        | string value                          | null        |
-| classDescription | string Value                          | null        |
-| dailyMeeting     | scheduleDaily (object)                | null        |
+| session          | session object                        | null        |
+| subject          | subject object                        | null        |
+| section          | section object                        | null        |
+| dailyMeeting     | daily object                          | null        |
 | startTime        | date object                           | null        |
-| length           | minutes as int (ie 60 = 60 min)       | null        |
+| length           | integer value (ie 60 = 60 min)        | null        |
 | seats            | integer value                         | null        |
 | seatsTaken       | integer value                         | null        |
 
-**Value name passed to template** : scheduleDaily
+**Value name passed to template** : daily
 
 | Value            | Option                               | Default     |
 | ---------------- |:------------------------------------:| -----------:|
@@ -276,7 +294,16 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | fri              |  true : false                        | false       |
 | sat              |  true : false                        | false       |
 
-**Value name passed to template** : scheduleSubject[int] where int is the record as an integer.
+**Value name passed to template** : subject
+
+| Value            | Option                               | Default     |
+| ---------------- |:------------------------------------:| -----------:|
+| code             |  3 char : string value               | null        |
+| name             |  string value                        | null        |
+| description      |  string value                        | null        |
+
+
+**Value name passed to template** : section
 
 | Value            | Option                               | Default     |
 | ---------------- |:------------------------------------:| -----------:|
@@ -301,7 +328,7 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 
 ### User Stories
 #### Format
-> " As a <role>, I want <goal/desire> so that <benefit> "
+> " As a -role-, I want -goal/desire- so that -benefit-"
 Benefit is optional.
 
 #### Assumptions
@@ -364,38 +391,71 @@ Benefit is optional.
 #### Derived User Stories
 **Total**: 34
 1. As a student, I want to request addition to class roll.
+
 2. As a student, I want to see the number of seats a class has and how many are available.
+
 3. As a system, it should not allow a student to add classes with no seats remaining.
+
 4. As a student, I want to drop a class.
+
 5. As a system, it should not allow a student to drop after the 2nd week of a session.
+
 6. As a student, I want to see my current schedule.
+
 7. As a student, I want to see my class history.
+
 8. As a student, I would like to see my posted grades with my class history.
+
 9. As a student, I would like to sort my class history by semester.
+
 10. As a system, it should restrict students from registering if prerequisites have not been taken.
+
 11. As a teacher, I want to see my class roll.
+
 12. As a teacher, I want to see a students current schedule.
+
 13. As a teacher, I want to view the students class history.
+
 14. As a teacher, I want to drop a student.
+
 15. As a teacher, I want to enter student grades.
+
 16. As a administrator, I want to add a user account.
+
 17. As a administrator, I want to authorize user profiles status at the university.
+
 18. As a administrator, I want to assign a users profile password.
+
 19. As a administrator, I want deactivate a user profiles authorization.
+
 20. As a system, It should not allow a users history to be deleted.
+
 21. As a administrator, I want to enter a class schedule.
+
 22. As a administrator, I want class schedules to be assigned to a session.
+
 23. As a administrator, I want to add new courses.
+
 24. As a administrator, I want assign courses to all degree majors.
+
 25. As a system, it should updates students grade status.
+
 26. As a system, it should define grade status freshman, sophomore, junior, senior.
+
 27. As a system, it should only authorize grade status for successfully completed courses.
+
 28. As a system, it should perform graduation check.
+
 29. As a system, it should define a graduation check by checking course completion against their assigned degree.
+
 30. As a student, I want sign in from my home personal computing device.
+
 31. As a student, I want to request to register for university sessions.
+
 32. As a student, I want to request addition to class roll.
+
 33. As a administrator, I want to view a students transcripts.  
+
 34. As a administrator, I want to view a students history and grades earned.
 
 #### Task Creation
