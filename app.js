@@ -10,7 +10,6 @@ var bodyParser = require('body-parser');
 var routeHome = require('./routes/index')(data);
 var routeCatalog = require('./routes/catalog')(data);
 var routeStudent = require('./routes/student')(data);
-var routeAdmin = require('./routes/admin')(data);
 var routeUser = require('./routes/user')(data);
 var routeCredential = require('./routes/credentials')(data);
 
@@ -31,7 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routeHome);
 app.use('/catalog', routeCatalog);
 app.use('/student', routeStudent);
-app.use('/admin', routeAdmin);
 app.use('/user', routeUser);
 app.use('/credentials', routeCredential);
 

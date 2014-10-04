@@ -2,34 +2,38 @@ module.exports = function (data) {
 	var express = require('express');
 	var router = express.Router();
 	var user = data.user;
+	var backURL;
 	
-	/* GET home page. */
+	/* GET home page.
 	router.get('/', function(req, res) {
-		res.render('index', { title: 'University Manager | Add or Drop Class', user: user });
+		res.render('student', { title: 'University Manager | Add or Drop Class', user: user });
 	});
+	 */
 	
 	router.get('/history', function(req, res) {
-		res.render('index', { title: 'University Manager | Student\'s Class History Report', user: user });
+		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: user });
 	});
 	
 	/* GET class to schedule page. */
 	router.get('/add', function(req, res) {
-		res.render('index', { title: 'University Manager | Add Class', user: user });
+		res.render('addrequest', { title: 'University Manager | Add Class', user: user });
 	});
 	
 	/* POST class to schedule page. */
-	router.post('/add', function(req, res) {
-		res.render('index', { title: 'University Manager | Class Added', user: user });
+	router.post('/add', function(req, res, next) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
 	});
 	
 	/* GET drop to schedule page. */
 	router.get('/drop', function(req, res) {
-		res.render('index', { title: 'University Manager | Drop Class', user: user });
+		res.render('drop', { title: 'University Manager | Drop Class', user: user });
 	});
 	
 	/* POST drop to schedule page. */
-	router.post('/drop', function(req, res) {
-		res.render('index', { title: 'University Manager Class Dropped', user: user });
+	router.post('/drop', function(req, res, next) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
 	});
 	
 	return router;

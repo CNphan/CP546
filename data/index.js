@@ -1,5 +1,5 @@
 module.exports = {
-	"user":{"type":"teacher",
+	"user":{"type":"guest",
 			"id":0,
 			"first":"Guest",
 			"last":"User"}
