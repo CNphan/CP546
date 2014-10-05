@@ -4,18 +4,18 @@ This web application manages aspects of a university.  The user profiles managed
   
 ### Features
 #### Students
-* Search the class schedule for available seats.
-* Add class to their schedule if seats remain.
-* Drop a class from their schedule and give an explanation as to why.
+* Search the course schedule for available seats.
+* Add course to their schedule if seats remain.
+* Drop a course from their schedule and give an explanation as to why.
   
 #### Teachers
-* Drop students from their class.
+* Drop students from their course.
 * View their current schedule.
 
 #### University Administrator
 * Add new student/teacher/administrator profiles.
 * Deactivate profiles but not delete them.
-* Schedule classes at the university.
+* Schedule courses at the university.
   
   
 ## Development Environments
@@ -74,7 +74,7 @@ Got to www.nodeclipse.org/updates for instruction on how to install new environm
 To add nodeeclipse to an existing installation of eclipse goto the application menu bar and select *Help > Install New Software*.  In the *Work with:* input field enter this address `http://dl.bintray.com/nodeclipse/nodeclipse/0.17`.  Select the core package and any other desired packages and install.
 
 ### Installing MongoDB
-
+Goto [www.mongodb.org/downloads](http://www.mongodb.org/downloads) and download version 2.2.7 package that relates to your operating system.  Follow the installers instruction, if any.
 
 ## Testing
 ### Unit Test
@@ -101,16 +101,16 @@ The link structure will defined as such during development:
   
 * **Catalog** | [localhost:3000/catalog](http://localhost:3000/catalog)
   * **File**: *catalog.jade*
-  * **Desc**: This page displays the classes by each session(semester).
+  * **Desc**: This page displays the courses by each session(semester).
   * **Security**: unrestricted
   * **Data**: schedule[array]
   * **Notes**
     * Show current session by subject.
-    * If student show add class button if room exist.
+    * If student show add course button if room exist.
   
 * **My Schedule** | [localhost:3000/catalog/schedule](http://localhost:3000/catalog/schedule)
   * **File**: *schedule.jade*
-  * **Desc**: This displays the teacher students classes currently assigned to them.  Students should see a drop class button for each class.  Teachers should see a Student Roll for each class.
+  * **Desc**: This displays the teacher students courses currently assigned to them.  Students should see a drop course button for each course.  Teachers should see a Student Roll for each course.
   * **Security**: Teacher & Student Only
   * **Data**: schedule[array]
   * **Notes**
@@ -118,33 +118,33 @@ The link structure will defined as such during development:
   
 * **Add Schedule** | [localhost:3000/catalog/addschedule](http://localhost:3000/catalog/addschedule)
   * **File**: *addschedule.jade*
-  * **Desc**: This page allows administrators to assign a schedule to a class.
+  * **Desc**: This page allows administrators to assign a schedule to a course.
   * **Security**: Administrator Only
   * **Data**: course[array]
   * **Notes**
     * Upon completion return to root page of process.
     * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* **Add Class** | [localhost:3000/catalog/addclass](http://localhost:3000/catalog/addclass)
-  * **File**: *addclass.jade*
-  * **Desc**: This page allows administrators to create a class.
+* **Add Course** | [localhost:3000/catalog/addcourse](http://localhost:3000/catalog/addcourse)
+  * **File**: *addcourse.jade*
+  * **Desc**: This page allows administrators to create a course.
   * **Security**: Administrator Only
   * **Data**: subject[array]
   * **Notes**
     * Upon completion return to root page of process.
     * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* **Class Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
+* **Course Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
   * **File**: *addrequest.jade*
-  * **Desc**: This is a confirmation page, student reviews information and clicks add class button. Request is sent by catalog add class button only.
+  * **Desc**: This is a confirmation page, student reviews information and clicks add course button. Request is sent by catalog add course button only.
   * **Security**: Student Only
   * **Data**: schedule 
   * **Notes**
     * Upon completion return to catalog page.
   
-* **Drop Class** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
+* **Drop Course** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
   * **File**: *drop.jade*
-  * **Desc**: This is a confirmation page, student reviews information and clicks drop class button. Request is sent by schedule drop class button only.
+  * **Desc**: This is a confirmation page, student reviews information and clicks drop course button. Request is sent by schedule drop course button only.
   * **Security**: Teacher & Student Only
   * **Data**: schedule 
   * **Notes**
@@ -152,7 +152,7 @@ The link structure will defined as such during development:
   
 * **Student's History** | [localhost:3000/student/history](http://localhost:3000/student/history)
   * **File**: *history.jade*
-  * **Desc**: View a students history of classes taken and organize by session(semester). 
+  * **Desc**: View a students history of courses taken and organize by session(semester). 
   * **Data**: schedule[array]
   * **Security**: All registered users.
   
@@ -170,7 +170,7 @@ The link structure will defined as such during development:
   * **File**: *adduser.jade*
   * **Desc**: This page allows administrators to approve registration of students and add new user profiles.
   * **Security**: Administrator Only
-  * **Data**: user[array]
+  * **Data**: userpool[array]
   * **Notes**
     * Upon form submit return to process.
   
@@ -178,6 +178,7 @@ The link structure will defined as such during development:
   * **File**: *deactivate.jade*
   * **Desc**: This allows a administrator to deactivate a profiles authorization.
   * **Security**: Administrator Only
+  * **Data**: userpool[array]
   * **Notes**
     * Upon completion return to root page of process.
 
@@ -197,7 +198,7 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | isRegistered     |  true : false                          | false       |
 | gradeLevel       |  true : false                          | false       |
  
-### Class Schedule Objects
+### Course Schedule Objects
 **Value name passed to template** : session
 
 | Value            | Option                                     | Default     |
@@ -234,7 +235,7 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 
 | Value            | Option                               | Default     |
 | ---------------- |:------------------------------------:| -----------:|
-| code             | 3 char : string value                | null        |
+| code             | 3 char : integer value               | null        |
 | name             | string value                         | null        |
 | description      | string value                         | null        |
 | subject          | subject object                       | null        |
@@ -268,10 +269,12 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 > " As a -role-, I want -goal/desire- so that -benefit-"
 Benefit is optional.
 
-### Assumptions Made
+### Assumptions Made 
 1. Professors can be generalized to the term "teacher".
-2. Want schedules and class registration managed above all.
+2. Want schedules and course registration managed above all.
 3. Semester can be generalized as "session".
+4. Class will be generalized as "course".
+5. Degree will be generalized as "subject".
 
 ### User Vision Broken Down to User Stories
 1. Students will use their PCs to log into the system and request classes.
@@ -366,8 +369,8 @@ Benefit is optional.
   2. As a system, it should restrict students from registering if prerequisites have not been taken.
 
 8. **History**
-  1. As a teacher, I want to view the students class history.
-  2. As a student, I want to see my class history.
+  1. As a teacher, I want to view the students course history.
+  2. As a student, I want to see my course history.
   3. As a administrator, I want to view a students transcripts.  
 
 9. **Front-end Views**
@@ -375,13 +378,13 @@ Benefit is optional.
 
 10. **Front-end Features**
   1. As a student, I want to see the number of seats a course has and how many are available.
-  2. As a system, it should not allow a student to add classes with no seats remaining.
+  2. As a system, it should not allow a student to add courses with no seats remaining.
   3. As a system, it should not allow a student to drop after the 2nd week of a session.
-  4. As a student, I would like to sort my class history by semester.
+  4. As a student, I would like to sort my course history by semester.
 
 11. **Grades**
   1. As a teacher, I want to enter student grades.
-  2. As a student, I would like to see my posted grades with my class history.
+  2. As a student, I would like to see my posted grades with my course history.
   3. As a administrator, I want to view a students history and grades earned.
 
 12. **Grade Level**
@@ -429,8 +432,8 @@ Benefit is optional.
   1. As a system, It should not allow a users history to be deleted.
 
 8. **History**
-  1. As a teacher, I want to view the students class history.
-  2. As a student, I want to see my class history.
+  1. As a teacher, I want to view the students course history.
+  2. As a student, I want to see my course history.
   3. As a administrator, I want to view a students transcripts.  
 
 9. **Front-end Views**
@@ -438,9 +441,9 @@ Benefit is optional.
 
 10. **Front-end Features**
   1. As a student, I want to see the number of seats a course has and how many are available.
-  2. As a system, it should not allow a student to add classes with no seats remaining.
+  2. As a system, it should not allow a student to add courses with no seats remaining.
   3. As a system, it should not allow a student to drop after the 2nd week of a session.
-  4. As a student, I would like to sort my class history by semester.
+  4. As a student, I would like to sort my course history by semester.
   
 #### Sprints
 ##### Sprint One
@@ -476,7 +479,7 @@ Benefit is optional.
 #### Product Backlog Inventory
 1. **Grades**
   1. As a teacher, I want to enter student grades.
-  2. As a student, I would like to see my posted grades with my class history.
+  2. As a student, I would like to see my posted grades with my course history.
   3. As a administrator, I want to view a students history and grades earned.
   
 5. **Degree Program**

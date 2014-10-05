@@ -4,9 +4,10 @@ mixin navItem(target, title)
     
 mixin adminNav()
   li.dropdown-header Administrator Menu
-  +navItem('/catalog/add', 'Add Schedule')
+  +navItem('/catalog/addschedule', 'Add Schedule')
+  +navItem('/catalog/addcourse', 'Add Course')
   li.divider
-  +navItem('/credentials/add', 'Add User')
+  +navItem('/credentials/add', 'Approve/Add User')
   +navItem('/credentials/deactivate', 'De-Activate User')
   block adminNav
   
@@ -14,15 +15,15 @@ mixin studentNav()
   li.dropdown-header Student Menu
   +navItem('catalog/schedule', 'My Schedule')
   li.divider
-  +navItem('/student/add', 'Add Class')
-  +navItem('/student/drop', 'Drop Class')
+  +navItem('/student/add', 'Add Course')
+  +navItem('/student/drop', 'Drop Course')
   block studentNav
     
 mixin teacherNav()
   li.dropdown-header Teacher Menu
   +navItem('/catalog/schedule', 'My Schedule')
   li.divider
-  +navItem('/student/history', 'Student\'s Class History')
+  +navItem('/student/history', 'Student\'s Course History')
   +navItem('/student/drop', 'Drop Student')
   block teachNav
 
@@ -58,4 +59,3 @@ div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labe
 
 mixin signIn()
   a(role='menuitem', tabindex='-1', data-toggle='modal', data-target='#login-form') Sign In
-  

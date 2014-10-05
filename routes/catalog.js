@@ -14,8 +14,8 @@ module.exports = function (data) {
 	});
 	
 	/* GET add page. */
-	router.get('/addclass', function(req, res) {
-		res.render('addclass', { title: 'University Manager | Add Class Schedule', user: user });
+	router.get('/addcourse', function(req, res) {
+		res.render('addcourse', { title: 'University Manager | Add Class Schedule', user: user });
 	});
 	
 	/* GET add page. */

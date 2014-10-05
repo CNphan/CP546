@@ -1,5 +1,6 @@
 include ../mixins/navigation.jade
 - user = typeof(user) != 'undefined' ? user : { }
+- school = typeof(school) != 'undefined' ? school : { }
 
 nav.navbar.navbar-default(role='navigation')
   .container-fluid
@@ -28,12 +29,19 @@ nav.navbar.navbar-default(role='navigation')
           ul.dropdown-menu(role='menu')
             if(user.type == 'admin')
               +adminNav()
+              li.divider
+              +navItem('/credentials/signout','Sign Out')
             else if (user.type == 'teacher')
               +teacherNav()
+              li.divider
+              +navItem('/credentials/signout','Sign Out')
             else if (user.type == 'student')
               +studentNav()
+              li.divider
+              +navItem('/credentials/signout','Sign Out')
             else
               +navItem('/credentials/register', 'Register Today!')
               li.divider
               li 
                 +signIn()
+            +navItem('/credentials/signout','Sign Out')
