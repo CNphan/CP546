@@ -11,12 +11,6 @@ body {
 	position: relative;
 }
 
-.btn { 
-	border-color: #ba5809; 
-	background-color: #cd610a;
-}
-
-.btn:hover { 
-	border-color: #9d4803; 
-	background-color: #ba5809;
+.agree-check {
+	margin-right:10px;
 }

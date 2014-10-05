@@ -20,7 +20,33 @@ block content
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 #{title}
-        p Welcome #{user.first}
+        #accordion.panel-group
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne")
+                  | Create An Account
+            #collapseOne.panel-collapse.collapse
+              .panel-body
+                form(role='form', method='POST', action='/credentials/create', id='new-user-form')
+                  div(class='input-group')
+                    div(class='input-group-addon') Value
+                    input.form-control(name='value', placeholder='', type='input', autofocus, required)
+                  br
+                  button(type='submit', class='btn btn-lg btn-primary pull-right') Create
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo")
+                  | Approve Student Registration
+            #collapseTwo.panel-collapse.collapse.in
+              .panel-body
+                form(role='form', method='POST', action='/credentials/register/complete', id='approve-register-form')
+                  div(class='input-group')
+                    div(class='input-group-addon') Value
+                    input.form-control(name='value', placeholder='', type='input', autofocus, required)
+                  br
+                  button(type='submit', class='btn btn-lg btn-primary pull-right') Approve
+        
 
 // End Jade Template

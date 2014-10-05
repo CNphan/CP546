@@ -9,10 +9,34 @@ module.exports = function (data) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
 	});
+
+	/* POST register page. */
+	router.post('/create', function(req, res) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
+	});
 	
+	/* GET sign-out. */
+	router.get('/signout', function(req, res) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
+	});
+
 	/* GET register page. */
 	router.get('/register', function(req, res) {
 		res.render('register', { title: 'University Manager | Register for Fall 2014', user: user });
+	});
+
+	/* POST register page. */
+	router.post('/register', function(req, res) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
+	});
+
+	/* POST register complete page. */
+	router.post('/register/complete', function(req, res) {
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
 	});
 	
 	/* GET add page. */
@@ -22,7 +46,8 @@ module.exports = function (data) {
 	
 	/* Post add page. */
 	router.post('/add', function(req, res, next) {
-		next();
+		backURL=req.header('Referer') || '/';
+		res.redirect(backURL);
 	});
 	
 	/* GET deactivate page. */
