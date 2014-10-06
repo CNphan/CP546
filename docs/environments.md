@@ -44,7 +44,7 @@ This will be delivered using popular web technologies like HTML5, JavaScript, an
 * Android
  
 
-## Development Environments
+## Developer Tools
 You can use a standard text editor to develop or you can use the Eclipse IDE.  Terminal commands are used to leverage the backend components.  
 
 ### Installing NodeEclipse

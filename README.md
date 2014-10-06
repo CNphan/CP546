@@ -62,7 +62,7 @@ This will be delivered using popular web technologies like HTML5, JavaScript, an
 * Android
  
 
-## Development Tools
+## Developer Tools
 You can use a standard text editor to develop or you can use the Eclipse IDE.  Terminal commands are used to leverage the backend components.  
 
 ### Installing NodeEclipse
@@ -680,6 +680,7 @@ block content
             //- Grouped content goes here.(ie: username = first & last name fields.)
 ```
 
+
 ###### Buttons
 ```jade
 
@@ -701,7 +702,7 @@ You must replace `<@value>` with the correct values:
 ```
 Field `<field-optional-*>` may be used for dynamic nature of form fields. You must replace `<@value>` with the correct values:
 
-* **[field-type](http://www.w3schools.com/html/html5_form_input_types.asp)** | 
+* **[field-type](http://www.w3schools.com/html/html5_form_input_types.asp)** | color, date, datetime, datetime-local, email, month, number, range, search, tel, time, url, week
 * **[field-optional](http://www.w3schools.com/html/html5_form_attributes.asp)** | There are many attributes.  We are pimarily concerned with applying `required` and `autofocus` tags.  
 
 ###### Input Area Drop Down with Label
