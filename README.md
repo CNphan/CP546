@@ -616,7 +616,7 @@ block nav
 When adding html content to a page you need to use the correct encapsulation of section content and table alignment using the Twitter Bootstrap [Grid Options](http://getbootstrap.com/css/#grid-options).  Grid *rows* must have colums be equal to 12.
 
 ##### Section Headers
-p Please use appropriate headers to describe content sections(ie: h1,h2,...).
+Please use appropriate headers to describe content sections(ie: h1,h2,...).
 ```jade
 h1 Page Header
   h2 Section Header 1
@@ -686,7 +686,7 @@ block content
   .form-group
     button.btn.btn-<btn-size>.btn-<btn-design>(type='<btn-type>')
 ```
-p You must replace `<@value>` with the correct values:
+You must replace `<@value>` with the correct values:
 * **[btn-size](http://getbootstrap.com/css/#buttons-sizes)** | xs, sm, md, lg, xl 
 * **[btn-option](http://getbootstrap.com/css/#buttons-options)** | default, primary, success, info, warning, danger, link 
 * **[btn-type](http://www.w3schools.com/tags/att_button_type.asp)** | button, submit, reset
@@ -699,13 +699,13 @@ p You must replace `<@value>` with the correct values:
       .input-group-addon Label
       input.form-control(name='field-name', placeholder='', type='<field-type>', <field-optional-1>, <field-optional-2>)
 ```
-p Field `<field-optional-*>` may be used for dynamic nature of form fields. You must replace `<@value>` with the correct values:
+Field `<field-optional-*>` may be used for dynamic nature of form fields. You must replace `<@value>` with the correct values:
 
 * **[field-type](http://www.w3schools.com/html/html5_form_input_types.asp)** | 
 * **[field-optional](http://www.w3schools.com/html/html5_form_attributes.asp)** | There are many attributes.  We are pimarily concerned with applying `required` and `autofocus` tags.  
 
 ###### Input Area Drop Down with Label
-p This is used for selecting an existing option from a drop down list.
+This is used for selecting an existing option from a drop down list.
 ```jade
 
   .form-group
