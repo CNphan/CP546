@@ -1,22 +1,21 @@
 module.exports = function (data) {
 	var express = require('express');
 	var router = express.Router();
-	var user = data.user;
 	var backURL;
 	
 	/* GET home page.
 	router.get('/', function(req, res) {
-		res.render('student', { title: 'University Manager | Add or Drop Class', user: user });
+		res.render('student', { title: 'University Manager | Add or Drop Class', user: data.user });
 	});
 	 */
 	
 	router.get('/history', function(req, res) {
-		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: user });
+		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: data.user });
 	});
 	
 	/* GET class to schedule page. */
 	router.get('/add', function(req, res) {
-		res.render('addrequest', { title: 'University Manager | Add Class', user: user });
+		res.render('addrequest', { title: 'University Manager | Add Class', user: data.user });
 	});
 	
 	/* POST class to schedule page. */
@@ -27,7 +26,7 @@ module.exports = function (data) {
 	
 	/* GET drop to schedule page. */
 	router.get('/drop', function(req, res) {
-		res.render('drop', { title: 'University Manager | Drop Class', user: user });
+		res.render('drop', { title: 'University Manager | Drop Class', user: data.user });
 	});
 	
 	/* POST drop to schedule page. */

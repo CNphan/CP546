@@ -2,51 +2,158 @@
 extends layout
 - userpool = typeof(userpool) != 'undefined' ? userpool : { }
 
-//-CSS is inserted in the HEAD tag.
-block css
-  
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
   
 //-Add navigation item to existing navigation set.
 block nav
-  
-//-Add navigation item to existing Administrator navigation set.
-block navAdmin
-  
+  li
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') New User
+  li
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') Reset Pass
+  li
+    a(data-toggle='collapse', data-parent="#accordion", data-target='#collapseTwo', href='#collapseTwo') Approve Student
+
 //-HTML content to display.
 block content
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        h1 User Accounts
+        br
+        p Please select the activity you wish to conduct below.
+        br
+        br
         #accordion.panel-group
           .panel.panel-default
             .panel-heading
-              h4.panel-title
+              h2.panel-title
                 a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne")
                   | Create An Account
             #collapseOne.panel-collapse.collapse
               .panel-body
                 form(role='form', method='POST', action='/credentials/create', id='new-user-form')
-                  div(class='input-group')
-                    div(class='input-group-addon') Value
-                    input.form-control(name='value', placeholder='', type='input', autofocus, required)
+                  h3 User Name
+                  .input-group
+                    .input-group-addon First Name
+                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
                   br
-                  button(type='submit', class='btn btn-lg btn-primary pull-right') Create
+                  .input-group
+                    .input-group-addon Last Name
+                    input.form-control(name='last', placeholder='', type='input', required)
+                  br
+                  h3 Contact
+                  .input-group
+                    .input-group-addon Phone
+                    input.form-control(name='phone', placeholder='', type='tel', required)
+                  br
+                  .input-group
+                    .input-group-addon Email  
+                    input.form-control(name='email', placeholder='', type='email', required)
+                  br                  
+                  h3 Permenent Address
+                  .input-group
+                    .input-group-addon Address 
+                    input.form-control(name='addr', placeholder='', type='input', required)
+                  br
+                  .input-group
+                    .input-group-addon Address 
+                    input.form-control(name='addr2', placeholder='', type='input', required)
+                  br
+                  .input-group
+                    .input-group-btn
+                      button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                        | Country  
+                        span.caret
+                      ul.dropdown-menu
+                        li Country list
+                    input.form-control(name='country', placeholder='', type='input', required)
+                  br
+                  .row
+                    .col-xs-8.col-sm-8.col-md-8.col-lg-8
+                      .input-group
+                        .input-group-btn
+                          button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                            | State  
+                            span.caret
+                          ul.dropdown-menu
+                            li State list
+                        input.form-control(name='state', placeholder='', type='input', required)
+                    .col-xs-4.col-sm-4.col-md-4.col-lg-4
+                      .input-group
+                        .input-group-addon Zip
+                        input.form-control(name='zip', placeholder='', type='input', required)
+                  br
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Create
           .panel.panel-default
             .panel-heading
               h4.panel-title
-                a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo")
-                  | Approve Student Registration
-            #collapseTwo.panel-collapse.collapse.in
+                a(data-toggle='collapse', data-parent='#accordion', href='#collapseThree')
+                  | Reset User Password
+            #collapseThree.panel-collapse.collapse
               .panel-body
-                form(role='form', method='POST', action='/credentials/register/complete', id='approve-register-form')
-                  div(class='input-group')
-                    div(class='input-group-addon') Value
+                form(role='form', method='POST', action='/credentials/create/reset', id='reset-pass-form')
+                  p User email will be sent a newly generated temporary password.
+                  .input-group
+                    .input-group-addon Email
                     input.form-control(name='value', placeholder='', type='input', autofocus, required)
                   br
-                  button(type='submit', class='btn btn-lg btn-primary pull-right') Approve
-        
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Reset Password
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a(data-toggle='collapse', data-parent='#accordion', href='#collapseTwo')
+                  | Approve Student Registration
+            #collapseTwo.panel-collapse.collapse
+              .panel-body
+                form(role='form', method='POST', action='/credentials/register/complete', id='approve-register-form')
+                  .row
+                    .col-xs-6.col-sm-6.col-md-6.col-lg-6.left-list
+                      h4 Approvals
+                      h5 No Transcript Students
+                      select.form-control(multiple, size='10')
+                        option User Name 1
+                        option User Name 2
+                        option User Name 3
+                        option User Name 4
+                        option User Name 5
+                        option User Name 6
+                        option User Name 7
+                      br
+                      h5 Transcripts Students
+                      select.form-control(multiple, size='10')
+                        option User Name 1
+                        option User Name 2
+                        option User Name 3
+                        option User Name 4
+                        option User Name 5
+                        option User Name 6
+                        option User Name 7                      
+                    .col-xs-6.col-sm-6.col-md-6.col-lg-6.right-list
+                      h4 Applicant Information
+                      br
+                      h5 Name
+                      p User name
+                      br
+                      h5 Contact
+                      h6 Phone
+                      p 111-111-1111
+                      h6 Email
+                      p my@email.com
+                      br
+                      h5 Permenent Address
+                      h6 Address
+                      p line 1
+                      p line 2
+                      .row
+                        .col-xs-8.col-sm-8.col-md-8.col-lg-8
+                          h6 State
+                          p California
+                        .col-xs-4.col-sm-4.col-md-4.col-lg-4
+                          h6 Zip
+                        p 92647
+                  br
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Approve
 
 // End Jade Template
