@@ -1,4 +1,4 @@
-# Template Design
+## Template Design
 ### Libraries In Use
 This project uses several CSS and JavaScript packages available to the public.  Instructions for using these an be found on their homepage.
 * Jquery 2.1.1 | www.jquery.com
@@ -37,11 +37,12 @@ block content
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        //-Content goes here.
 
 // End Jade Template
 ```
 
-#### Loading JavaScript Files
+##### Loading JavaScript Files
 If using self generated JavaScript you can load it using `block js`.  You have two options for loading JavaScript content.  You can use the SCRIPT tag or you can use the preferred method and include a `.js` file from the `public/js` directory folder.
 ```jade
 
@@ -51,7 +52,7 @@ block js
   script(src='js/myfile.js') //-preferred
 ```
 
-#### Loading CSS Files
+##### Loading CSS Files
 If using self generated css you can load it using `block css`.  You can include a `.css` file from the `public/css` directory folder.
 ```jade
 
@@ -59,7 +60,7 @@ block css
   link(rel='stylesheet', href='/css/myfile.css')
 ```
 
-#### Adding Navigation Link Items
+##### Adding Navigation Link Items
 When adding navigation items you can use `+navItem()` for any profile `block nav*` tag.
 ```jade
 
@@ -68,11 +69,118 @@ block nav
 ```
 
 #### Adding Content
-When adding html content to a page you need to use the correct encapsulation of section content and table alignment using the Twitter Bootstrap [Grid Options](http://getbootstrap.com/css/#grid-options).  Grid rows must have colums be equal to 12.
+When adding html content to a page you need to use the correct encapsulation of section content and table alignment using the Twitter Bootstrap [Grid Options](http://getbootstrap.com/css/#grid-options).  Grid *rows* must have colums be equal to 12.
+
+##### Section Headers
+p Please use appropriate headers to describe content sections(ie: h1,h2,...).
+```jade
+h1 Page Header
+  h2 Section Header 1
+    h3 Subsection Header 1
+      h4 Subsection Header 2
+        h5 Subsection Header 3
+          h6 Subsection Header 4
+```
+
+##### Tables
+###### Example: Row spanning content area width.
 ```jade
 
 block content
-  section#main.container
+  section.container
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        //- Content goes here
+```
+
+###### Example: Row with 2 even colums. 
+```jade
+
+block content
+  section.container
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .row
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6
+            //- Content goes here.
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6
+            //- Content goes here.
+```
+
+###### Example: Row with 3 unequal colums. 
+```jade
+
+block content
+  section.container
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .row
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6
+            //- Content goes here.
+          .col-xs-4.col-sm-4.col-md-4.col-lg-4
+            //- Content goes here.
+          .col-xs-2.col-sm-2.col-md-2.col-lg-2
+            //- Content goes here.
+```
+
+##### Forms
+###### Content Area
+```jade
+
+block content
+  section.container
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        form(role='form', method='POST', action='/url', id='<unique-id>-form')
+          .form-group
+            //- Grouped content goes here.(ie: username = first & last name fields.)
+```
+
+###### Buttons
+```jade
+
+  .form-group
+    button.btn.btn-<btn-size>.btn-<btn-design>(type='<btn-type>')
+```
+p You must replace `<@value>` with the correct values:
+* **[btn-size](http://getbootstrap.com/css/#buttons-sizes)** | xs, sm, md, lg, xl 
+* **[btn-option](http://getbootstrap.com/css/#buttons-options)** | default, primary, success, info, warning, danger, link 
+* **[btn-type](http://www.w3schools.com/tags/att_button_type.asp)** | button, submit, reset
+
+###### Input Area with Label
+```jade
+
+  .form-group
+    .input-group
+      .input-group-addon Label
+      input.form-control(name='field-name', placeholder='', type='<field-type>', <field-optional-1>, <field-optional-2>)
+```
+p Field `<field-optional-*>` may be used for dynamic nature of form fields. You must replace `<@value>` with the correct values:
+
+* **[field-type](http://www.w3schools.com/html/html5_form_input_types.asp)** | 
+* **[field-optional](http://www.w3schools.com/html/html5_form_attributes.asp)** | There are many attributes.  We are pimarily concerned with applying `required` and `autofocus` tags.  
+
+###### Input Area Drop Down with Label
+p This is used for selecting an existing option from a drop down list.
+```jade
+
+  .form-group
+    .input-group
+      .input-group-btn
+        button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+          | Label
+          span.caret
+        ul.dropdown-menu
+          li Data Options
+          //- More options
+      input.form-control(name='field-name', placeholder='', type='<field-type>')
+```
+
+###### List
+```jade
+
+  .form-group
+    select.form-control(multiple, size='10')
+      option Data Value
+      //- Content goes here.
 ```
