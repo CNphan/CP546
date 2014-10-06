@@ -41,7 +41,6 @@
     1. [Step One](repository.md#step-one-fork-code)
     2. [Step Two](repository.md#step-two-edit-forked-copy)
     3. [Step Three](repository.md#step-three-create-pull-request)
-  1. [](repository.md)
 8. [Data](data.md)
   1. [User Objects](data.md#user-profile-objects)
   2. [Course & Schedule Objects](data.md#course-schedule-objects)
