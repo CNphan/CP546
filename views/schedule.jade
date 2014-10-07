@@ -4,12 +4,15 @@ extends layout
 
 //-CSS is inserted in the HEAD tag.
 block css
+  link(href='/css/schedule.css')
   
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
   
 //-Add navigation item to existing navigation set.
 block nav
+  +navItem('#main','My schedule')
+  +navItem('#sec-two','My schedule')
   
 //-Add navigation item to existing Teacher navigation set.
 block navTeacher
@@ -23,7 +26,64 @@ block content
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 #{title}
-        p Welcome #{user.first}
+        h1 Your current class schedule is listed below
+        p Student Name: Hooman Majidzadeh
+        p Student ID: 893555351
+        p Semester: Fall 2014
+        br
+        table.schedule
+          tr
+            th Course Name
+            th Time
+            th Instructor
+            th Location
+          tr
+            td Software Requirements
+            td Monday 10-12
+            td Prof.Chio
+            td MH-210
+          tr
+            td Software Architecture
+            td Tuesday 10-12
+            td Prof.Jo
+            td Engineering-011
+          tr
+            td Software Project Management
+            td Wednesday 10-12
+            td Prof.Cong
+            td UH-111
+          tr
+            td Software Verification & Validation
+            td Friday 10-12
+            td Prof.Chen
+            td UH-123
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  br
+  
+  section#sec-two.container
+    .row
+      //-Columns in a row must equal 12. 
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .col-xs-5.col-sm-5.col-md-5.col-lg-5
+          p hi
+        .col-xs-7.col-sm-7.col-md-7.col-lg-7
+          p hello
+
 
 // End Jade Template
