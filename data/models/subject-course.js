@@ -4,10 +4,11 @@ var SchoolSubject = require('./school-subject');
 
 // define the schema for our user model
 var SubjectCourseSchema = mongoose.Schema({
-    code:         {type: String},
-    units:        {type: String},
+    code:         {type: Number},
+    units:        {type: Number},
     name:         {type: String},
-    subject:      {type: SchoolSubject},
+    subject:      {type: mongoose.Schema.Types.ObjectId,
+                   ref:  SchoolSubject.schema},
     description:  {type: String},
     requirements: {type: String}
 });

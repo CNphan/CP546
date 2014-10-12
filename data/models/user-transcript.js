@@ -6,7 +6,7 @@ var UserTranscriptSchema = mongoose.Schema({
     school:  {type: String},
     city:    {type: String},
     state:   {type: String},
-    gpa:     {type: String}
+    gpa:     {type: Number}
 });
 
 // create the model for users and expose it to our app

@@ -5,12 +5,12 @@ var UserTranscriptHistory = require('./user-transcript-history');
 
 // define the schema for our user model
 var userDetailSchema = mongoose.Schema({
-    birth:       {type: Date},
-    gender:      {type: String},
-    grade_level: {type: String},
-    gpa:         {type: String},
-    contact:     {type: UserContact},
-    transcript:  {type: UserTranscriptHistory}
+    birth:       {type:  Date},
+    gender:      {type:  String},
+    contact:     [{type: mongoose.Schema.Types.ObjectId,
+                   ref:  UserContact.schema}],
+    transcript:  {type:  mongoose.Schema.Types.ObjectId,
+                   ref:  UserTranscriptHistory.schema}
 });
 
 // create the model for users and expose it to our app

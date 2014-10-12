@@ -11,8 +11,9 @@ var userSchema = mongoose.Schema({
     last:       {type: String, required: true},
     user_type:  {type: String, required: true},
     active:     {type: String, required: true},
-    joined:     {type: Date, required: true},
-    detail:     {type: UserDetail}
+    joined:     {type: Date, default:Date.now},
+    detail:     {type: mongoose.Schema.Types.ObjectId,
+                 ref:  UserDetail.schema}
 });
 
 // generating a hash

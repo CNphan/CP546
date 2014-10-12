@@ -6,11 +6,13 @@ var ScheduleDaily = require('./schedule-daily');
 // define the schema for our user model
 var ScheduleSchema = mongoose.Schema({
     session:     {type: String},
-    daily:       {type: ScheduleDaily},
-    instructor:  {type: User},
+    daily:       {type: mongoose.Schema.Types.ObjectId,
+                  ref:  ScheduleDaily.schema},
+    instructor:  {type: mongoose.Schema.Types.ObjectId,
+                  ref:  User.schema},
     start_time:  {type: Date},
-    min_length:  {type: String},
-    seats:       {type: String},
+    min_length:  {type: Number},
+    seats:       {type: Number},
     location:    {type: String}
 });
 
