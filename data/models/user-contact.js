@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var userContactSchema = mongoose.Schema({
+    type:   {type: String},
+    phone:  {type: String},
     addr:   {type: String},
     addr_2: {type: String},
     city:   {type: String},

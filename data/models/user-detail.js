@@ -9,7 +9,7 @@ var userDetailSchema = mongoose.Schema({
     gender:      {type:  String},
     contact:     [{type: mongoose.Schema.Types.ObjectId,
                    ref:  UserContact.schema}],
-    transcript:  {type:  mongoose.Schema.Types.ObjectId,
+    transcripts:  {type:  mongoose.Schema.Types.ObjectId,
                    ref:  UserTranscriptHistory.schema}
 });
 
