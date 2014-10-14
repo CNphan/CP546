@@ -16,6 +16,7 @@ block navAdmin
   
 //-Add navigation item to existing Teacher navigation set.
 block navTeacher
+   +navItem('#main','Student History')
   
 //-Add navigation item to existing Student navigation set.
 block navStudent
@@ -27,6 +28,26 @@ block content
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h1 #{title}
-        p Welcome #{user.first}
+        //p Welcome #{user.first}
+        p Enter student's information to see his/her class history 
+        .row 
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        .row
+            .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+              .input.group
+                .input-group-addon Last Name
+                input.form-control(name='Last Name', placeholder='', type='input', required)
+            .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+              .input.group
+                .input-group-addon CWID
+                input.form-control(name='CWID', placeholder='', type='number', required)
+         .row
+             .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+              .input.group
+                .input-group-addon Semester
+                input.form-control(name='Semeser', placeholder='', type='input', required)
+             
+                button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') View
+        
 
 // End Jade Template
