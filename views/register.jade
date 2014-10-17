@@ -1,8 +1,13 @@
 // Begin Jade template.
 extends layout
 
+//-CSS is inserted in the HEAD tag.
+block css
+  link(rel='stylesheet', href='/css/register-form.css')
+  
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
+  script(src='/js/register-form.js')
   
 //-Add navigation item to existing navigation set.
 block nav
@@ -21,105 +26,114 @@ block content
             h4.panel-title
               | Apply for Fall 2014 Registration
           .panel-body
-            form(role='form', method='POST', action='/credentials/register', id='register-form')
-                  h3 Applicant
+            form(role='form', method='POST', action='/credentials/create', id='register-form')
+              h3 Applicant
+              .input-group
+                .input-group-addon First Name
+                input.form-control(name='first_user', placeholder='', type='input', autofocus, required)
+              br
+              .input-group
+                .input-group-addon Last Name
+                input.form-control(name='last_user', placeholder='', type='input', required)
+              br
+              h4 Gender
+              .input-group.col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .input-group-btn
+                  button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                    | Sex  
+                    span.caret
+                  ul.dropdown-menu
+                    li State list
+                input.form-control(name='gender_user', placeholder='', type='input', required)
+              br
+              h4 Age
+              .input-group.col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .input-group-addon Birth
+                input.form-control(name='birth_user', placeholder='', type='Date', required)
+              br
+              h3 Contact
+              .input-group
+                .input-group-addon Phone
+                input.form-control(name='phone_user', placeholder='', type='tel', required)
+              br
+              .input-group
+                .input-group-addon Email  
+                input.form-control(name='email_user', placeholder='', type='email', required)
+              br                  
+              h3 Permenent Address
+              .input-group
+                .input-group-addon Address 
+                input.form-control(name='addr_user', placeholder='', type='input', required)
+              br
+              .input-group
+                .input-group-addon Address 
+                input.form-control(name='addr2_user', placeholder='', type='input')
+              br
+              .input-group
+                .input-group-btn
+                  button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                    | Country  
+                    span.caret
+                  ul.dropdown-menu
+                    li Country list
+                input.form-control(name='country_user', placeholder='', type='input', required)
+              br
+              .row
+                .col-xs-8.col-sm-8.col-md-8.col-lg-8
                   .input-group
-                    .input-group-addon First Name
-                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
-                  br
-                  .input-group
-                    .input-group-addon Last Name
-                    input.form-control(name='last', placeholder='', type='input', required)
-                  br
-                  h4 Gender
-                  .input-group.col-xs-2.col-sm-2.col-md-2.col-lg-2
                     .input-group-btn
                       button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
-                        | Sex  
+                        | State  
                         span.caret
                       ul.dropdown-menu
                         li State list
-                    input.form-control(name='state', placeholder='', type='input', required)
-                  br
-                  h3 Contact
+                    input.form-control(name='state_user', placeholder='', type='input', required)
+                .col-xs-4.col-sm-4.col-md-4.col-lg-4
                   .input-group
-                    .input-group-addon Phone
-                    input.form-control(name='phone', placeholder='', type='tel', required)
-                  br
+                    .input-group-addon Zip
+                    input.form-control(name='zip_user', placeholder='', type='input', required)
+              br
+              h3 General Education Transcript
+              p Please provide information about your High School or GED information for your graduating institution.  If you are not sending transcripts from other universities you will need to send offical proof of High School Diploma or GED. 
+              .row
+                .col-xs-8.col-sm-8.col-md-8.col-lg-8
                   .input-group
-                    .input-group-addon Email  
-                    input.form-control(name='email', placeholder='', type='email', required)
-                  br                  
-                  h3 Permenent Address
+                    .input-group-addon School Name
+                    input.form-control(name='school_general', placeholder='', type='input', required)
+                .col-xs-4.col-sm-4.col-md-4.col-lg-4
                   .input-group
-                    .input-group-addon Address 
-                    input.form-control(name='addr', placeholder='', type='input', required)
-                  br
+                    .input-group-addon GPA 
+                    input.form-control(name='gpa_general', placeholder='', type='input', required)
+              br
+              .row
+                .col-xs-8.col-sm-8.col-md-8.col-lg-8
                   .input-group
-                    .input-group-addon Address 
-                    input.form-control(name='addr2', placeholder='', type='input', required)
-                  br
+                    .input-group-addon City
+                    input.form-control(name='city_general', placeholder='', type='input', required)
+                .col-xs-4.col-sm-4.col-md-4.col-lg-4
                   .input-group
-                    .input-group-btn
-                      button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
-                        | Country  
-                        span.caret
-                      ul.dropdown-menu
-                        li Country list
-                    input.form-control(name='country', placeholder='', type='input', required)
-                  br
-                  .row
-                    .col-xs-8.col-sm-8.col-md-8.col-lg-8
-                      .input-group
-                        .input-group-btn
-                          button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
-                            | State  
-                            span.caret
-                          ul.dropdown-menu
-                            li State list
-                        input.form-control(name='state', placeholder='', type='input', required)
-                    .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                      .input-group
-                        .input-group-addon Zip
-                        input.form-control(name='zip', placeholder='', type='input', required)
-                  br
-                  h3 General Education History
-                  p Please provide information about your High School or GED information for your graduating institution.  If you are not sending transcripts from other universities you will need to send offical proof of High School Diploma or GED. 
-                  .row
-                    .col-xs-8.col-sm-8.col-md-8.col-lg-8
-                      .input-group
-                        .input-group-addon School Name
-                        input.form-control(name='ged-school', placeholder='', type='input', required)
+                    .input-group-addon State 
+                    input.form-control(name='state_general', placeholder='', type='input', required)
+              br
+              h3 Higher Education Transcripts
+              p Please provide any information you can about your previous college experience.  Official transcripts need to be recieved three months prior to the begining of the Fall 2014 session.
+              button#add-transcript.btn.btn-primary.btn-xs(type='button', data-loading-text='Adding Record...') 
+                | + Add Transcript
+              br
+              br
+              #college-transcripts
+                input.form-control(name='transcript_college_record_number', value='1', type='hidden')
+                .row
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-12.list-group-item
                     .col-xs-4.col-sm-4.col-md-4.col-lg-4
                       .input-group
                         .input-group-addon GPA 
-                        input.form-control(name='ged-gpa', placeholder='', type='input', required)
-                  br
-                  .row
-                    .col-xs-8.col-sm-8.col-md-8.col-lg-8
-                      .input-group
-                        .input-group-addon City
-                        input.form-control(name='ged-city', placeholder='', type='input', required)
-                    .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                      .input-group
-                        .input-group-addon State 
-                        input.form-control(name='ged-state', placeholder='', type='input', required)
-                  br
-                  h3 Transcripts
-                  p Please provide any information you can about your previous college experience.  Official transcripts need to be recieved three months prior to the begining of the Fall 2014 session.
-                  br
-                  button.btn.btn-primary.btn-xs(type='button') 
-                    | + Add Transcript
-                  br
-                  br
-                  .row
-                    .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                      .input-group
-                        .input-group-addon GPA 
-                        input.form-control(name='trans-gpa', placeholder='', type='input')
-                    .col-xs-8.col-sm-8.col-md-8.col-lg-8
+                        input.form-control(name='gpa_transcript_1', placeholder='', type='input')
+                    .col-xs-7.col-sm-7.col-md-7.col-lg-7
                       .input-group
                         .input-group-addon School
-                        input.form-control(name='trans-school', placeholder='', type='input')
-                  br
-                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Apply Now!
+                        input.form-control(name='school_transcript_1', placeholder='', type='input')
+                    .col-xs-1.col-sm-1.col-md-1.col-lg-1.middle
+                      span.badge 1
+              br
+              button#submit-application.btn.btn-lg.btn-primary.pull-right(type='submit',data-loading-text='Sending Application...') Send Application Now!

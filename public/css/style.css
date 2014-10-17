@@ -46,3 +46,10 @@ body h6 {
 .right-list {
 	height: 475px;
 }
+
+.middle {
+	text-align: center;
+	verticle-align:middle;
+	margin: 0px auto;
+	padding: 5px;
+}

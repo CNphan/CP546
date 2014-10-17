@@ -18,3 +18,11 @@ var ScheduleSchema = mongoose.Schema({
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Schedule', ScheduleSchema);
+
+// get data that should be returned.
+module.exports.methods.getData = function(){
+	return {
+		session: this.session,
+		daily: this.daily
+	};
+};

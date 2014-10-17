@@ -27,6 +27,10 @@ mixin teacherNav()
   +navItem('/student/drop', 'Drop Student')
   block teachNav
 
+mixin pendingNav()
+  li.dropdown-header Student Applicant
+  +navItem('#status-pending', 'Application processing...')
+  
 div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labelledby='loginLabel', aria-hidden='true')
   div(class='modal-dialog modal-sm')
     div(class='modal-content')

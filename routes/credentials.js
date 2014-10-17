@@ -1,18 +1,33 @@
 module.exports = function (data) {
 	var express = require('express');
 	var router = express.Router();
+	var user;
 	var backURL;
 	
 	/* POST credentials page. */
 	router.post('/', function(req, res, next) {
+		var user;
+		data.user.authenticate(req, function(err, data){
+			if(err){
+				console.log(err);
+				//res.send({error:err});
+			} else {
+				console.log('Welcome ' + data.first + ' : ' + data.last);
+				user = data;
+			}
+		});
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
+		//res.send(user);
 	});
 
 	/* POST register page. */
-	router.post('/create', function(req, res) {
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+	router.post('/create', function(req, res, next) {
+		console.log('Step ' + 1);
+		data.user.create(req, function(err){
+			if(err){next(err);}
+		});
+		res.redirect('/');
 	});
 
 	/* POST password reset page. */
@@ -37,16 +52,19 @@ module.exports = function (data) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
 	});
-
-	/* POST register complete page. */
-	router.post('/register/complete', function(req, res) {
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
-	});
 	
 	/* GET add page. */
 	router.get('/add', function(req, res) {
-		res.render('adduser', { title: 'University Manager | Grant Credentials', user: data.user });
+		data.user.getUser('bclark@csu.fullerton.edu', function(err, user){
+			if (err){console.log(err);}
+			data.user.getUserArrayByType('pending', function (err, applicants) {
+				if (err){console.log(err);}
+				//console.log(applicants);
+				res.render('adduser', { title: 'University Manager | Grant Credentials', user: user, applicants: applicants });
+			});			
+			//console.log(data);
+		});
+
 	});
 	
 	/* Post add page. */

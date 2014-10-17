@@ -1,6 +1,5 @@
 // Begin Jade template.
 extends layout
-- userpool = typeof(userpool) != 'undefined' ? userpool : { }
 
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
@@ -16,6 +15,7 @@ block nav
 
 //-HTML content to display.
 block content
+  - applicants = typeof(applicants) != 'undefined' ? applicants : { }
   section#main.container
     .row
       //-Columns in a row must equal 12. 
@@ -113,23 +113,17 @@ block content
                       h4 Approvals
                       h5 No Transcript Students
                       select.form-control(multiple, size='10')
-                        option User Name 1
-                        option User Name 2
-                        option User Name 3
-                        option User Name 4
-                        option User Name 5
-                        option User Name 6
-                        option User Name 7
+                        for n in applicants
+                          // tmp for populated ge only history.
+                          if (n.type === 'pending')
+                            option #{n.first} #{n.last}
                       br
                       h5 Transcripts Students
                       select.form-control(multiple, size='10')
-                        option User Name 1
-                        option User Name 2
-                        option User Name 3
-                        option User Name 4
-                        option User Name 5
-                        option User Name 6
-                        option User Name 7                      
+                        for n in applicants
+                          // tmp for populated college history students.
+                          if (n.type === 'pending')
+                            option #{n.first} #{n.last} 
                     .col-xs-6.col-sm-6.col-md-6.col-lg-6.right-list
                       h4 Applicant Information
                       br
