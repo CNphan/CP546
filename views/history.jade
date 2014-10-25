@@ -7,17 +7,32 @@ block js
   
 //-Add navigation item to existing navigation set.
 block nav
+<<<<<<< HEAD
   li
     a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') View Course History
   li
     a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') View Transcript
  
+=======
+  
+//-Add navigation item to existing Administrator navigation set.
+block navAdmin
+  
+//-Add navigation item to existing Teacher navigation set.
+block navTeacher
+   +navItem('#main','Student History')
+  
+//-Add navigation item to existing Student navigation set.
+block navStudent
+  
+>>>>>>> 00ea3e8a6c9af49e870a20c8ead36a8b1e56da20
 //-HTML content to display.
 block content
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
+<<<<<<< HEAD
         h1 Student Class History Report
         br
         p Please select the activity you wish to conduct below.
@@ -72,5 +87,32 @@ block content
                     input.form-control(name='id', placeholder='', type='input', required)
                   br
                   button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
+=======
+        h1 #{title}
+        //p Welcome #{user.first} 
+        br
+        .row 
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          h3 Admin only
+          p Enter student's information to see his/her class history
+        .row
+          .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+            .input.group
+              .input-group-addon Last Name
+              input.form-control(name='history.lastName', placeholder='', type='input', required)
+          .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+            .input.group
+              .input-group-addon CWID
+              input.form-control(name='history.CWID', placeholder='', type='number', required)
+        br
+        .row
+          .col-xs-6.col-sm-6.col-md-6-.col-lg-6
+            .input.group
+              .input-group-addon Semester
+              input.form-control(name='history.semeser', placeholder='', type='input', required)
+        br
+        button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') View
+        
+>>>>>>> 00ea3e8a6c9af49e870a20c8ead36a8b1e56da20
 
 // End Jade Template
