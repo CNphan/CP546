@@ -56,7 +56,7 @@ function newUserTranscript(req, record){
             return err;
         }
     });
-		console.log('transcript id created: ' + userTranscript._id);
+		console.log('transcript id created: ' + record + userTranscript._id);
 		return userTranscript._id;
 }
 
@@ -129,7 +129,7 @@ function newUserCollegeTranscripts(req){
 	var userCollegeTranscripts = [];
 	var transcriptCount = req.body.transcript_college_record_number;
 	if (req.body.transcript_college_record_number > 0){
-        for (var i = 0; i < transcriptCount; ++i){
+        for (var i = 1; i <= transcriptCount; i++){
             userCollegeTranscript = newUserTranscript(req, '_transcript_' + i);
             userCollegeTranscripts.push(userCollegeTranscript);
         }
@@ -212,72 +212,115 @@ module.exports.getUser = function(email, cb){
 	
 	var test = [];
 	
+	//search for user object
 	User
 		.findOne({email:email})
 		.exec(function(err, user){
 			if (err) {cb(err, null);return;}
 			test = user.getData();
+			
+			// search for detail object
 			UserDetail
 			.findOne({detail:user.detail._id})
 			.exec(function(err, details){
 				if (err) {cb(err, null);return;}
-				user.detail = [];
-				user.detail = details.getData();
+				test.detail = [];
+				test.detail = details.getData();
+				
+				//search for contact objects
 				var contactId = [];
+				test.detail.contact = [];
 				for (n in details.contact){
 					if(n == 0) {contactId.push(details.contact[n]);}
 				}
-				UserContact
-						.find({_id:contactId})
+				for(var i =0;i<details.contact.length; i++){
+					UserContact
+						.find({_id:contactId[i]})
 						.exec(function(err, contact){
 							if (err) {cb(err, null);return;}
-							test.detail.contact = [];
 							for(n in contact){
 								test.detail.contact.push(contact[n].getData());
 							}
-							UserTranscriptHistory
-								.findOne({_id:details.transcripts})
-								.exec(function(err, history){
+						});
+				}
+				
+				// search for transcript history object
+				if(details.transcripts){
+					UserTranscriptHistory
+						.findOne({_id:details.transcripts})
+						.exec(function(err, history){
+							if (err) {cb(err, null);return;}
+							test.detail.transcripts = history.getData();
+							
+							//search for college transcript objects
+							var transcriptId = [];
+							test.detail.transcripts.college = [];
+							for (var i = 0; i < history.college.length; i++){
+								transcriptId.push(history.college[i]);
+							}
+							for(var i = 0; i < transcriptId.length; i++){
+								UserTranscript
+									.findOne({_id:transcriptId[i]})
+									.exec(function(err, transcripts){
+										if (err) {cb(err, null);return;}
+										test.detail.transcripts.college.push(transcripts.getData());
+									});
+							}
+							
+							// search for ge transcript object
+							UserTranscript
+								.findOne({_id:history.general})
+								.exec(function(err, ge){
 									if (err) {cb(err, null);return;}
-									var transcriptId = [];
-									transcriptId.push(history.general);
-									for (var n; n < history.college.length; i++){
-										transcriptId.push(history.college[n]);
-									}
-									test.detail.transcripts = history.getData();
-									UserTranscript
-										.find({_id:transcriptId})
-										.exec(function(err, transcripts){
-											if (err) {cb(err, null);return;}
-											console.log(transcripts);
-											test.detail.transcripts.general = transcripts[0].getData();
-											console.log('running test: ', test.detail.transcripts.general);
-											cb(null, user);
-											return;
-										});
+									test.detail.transcripts.general = ge.getData();
+									
+									//console.log('running test: ', test.detail.transcripts);
+									cb(null, test);
+									return;
 								});
 						});
+				} else {
+					//console.log('running test: ', test.detail.transcripts);
+					cb(null, test);
+					return;
+				}
 			 	});
 		});
-	
-	//db.close();
 };
 
 module.exports.getUserArrayByType = function (type, cb) {
 	db.open('user');
+
+	var test = [];
 	
 	User
 		.find({type:type})
-		.lean()
-		.populate('detail')
 		.exec(function(err,users){
-			if (err) {
-				cb(err, null);
-				return;
+			if (err) {cb(err, null);return;}
+			test = [];
+			
+			// search for detail object
+			for (var i = 0; i < users.length;i++){
+				test.push(users[i].getData());
+				UserDetail
+					.findOne({detail:test[i].detail.id})
+					.populate('transcripts contact')
+					.exec(function(err, details){
+						if (err) {cb(err, null);return;}
+						for (var n = 0; n < users.length; n++){
+							//console.log(details);
+							if(details._id === users[n].detail._id){
+								console.log(n + ' Wins!!!');
+								test[n].detail = details.getData();
+								console.log(test);
+							}
+						}
+					});
 			}
-			//console.log(users);
-			cb(null, users);
-			return;		
+			
+			//console.log(test);
+			cb(null, test);
+			return;	
 		});
 
 	//db.close();
