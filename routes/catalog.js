@@ -19,7 +19,7 @@ module.exports = function (data) {
 	
 	/* GET add page. */
 	router.get('/addschedule', function(req, res) {
-		res.render('addschedule', { title: 'University Manager | Class Scheduled Added', user: data.user });
+		res.render('addschedule', { title: 'University Manager | Class Scheduled added', user: data.user });
 	});
 	
 	return router;
