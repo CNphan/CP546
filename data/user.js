@@ -176,7 +176,6 @@ module.exports.authenticate = function (req, cb) {
 			return;
 		});
 
-	db.close();
 };
 
 function findUser(email){
@@ -210,26 +209,26 @@ function findTranscriptHistory(id){
 module.exports.getUser = function(email, cb){
 	db.open('user');
 	
-	var test = [];
+	var profile = [];
 	
 	//search for user object
 	User
 		.findOne({email:email})
 		.exec(function(err, user){
 			if (err) {cb(err, null);return;}
-			test = user.getData();
+			profile = user.getData();
 			
 			// search for detail object
 			UserDetail
 			.findOne({detail:user.detail._id})
 			.exec(function(err, details){
 				if (err) {cb(err, null);return;}
-				test.detail = [];
-				test.detail = details.getData();
+				profile.detail = [];
+				profile.detail = details.getData();
 				
 				//search for contact objects
 				var contactId = [];
-				test.detail.contact = [];
+				profile.detail.contact = [];
 				for (n in details.contact){
 					if(n == 0) {contactId.push(details.contact[n]);}
 				}
@@ -239,7 +238,7 @@ module.exports.getUser = function(email, cb){
 						.exec(function(err, contact){
 							if (err) {cb(err, null);return;}
 							for(n in contact){
-								test.detail.contact.push(contact[n].getData());
+								profile.detail.contact.push(contact[n].getData());
 							}
 						});
 				}
@@ -250,11 +249,11 @@ module.exports.getUser = function(email, cb){
 						.findOne({_id:details.transcripts})
 						.exec(function(err, history){
 							if (err) {cb(err, null);return;}
-							test.detail.transcripts = history.getData();
+							profile.detail.transcripts = history.getData();
 							
 							//search for college transcript objects
 							var transcriptId = [];
-							test.detail.transcripts.college = [];
+							profile.detail.transcripts.college = [];
 							for (var i = 0; i < history.college.length; i++){
 								transcriptId.push(history.college[i]);
 							}
@@ -263,7 +262,7 @@ module.exports.getUser = function(email, cb){
 									.findOne({_id:transcriptId[i]})
 									.exec(function(err, transcripts){
 										if (err) {cb(err, null);return;}
-										test.detail.transcripts.college.push(transcripts.getData());
+										profile.detail.transcripts.college.push(transcripts.getData());
 									});
 							}
 							
@@ -272,16 +271,15 @@ module.exports.getUser = function(email, cb){
 								.findOne({_id:history.general})
 								.exec(function(err, ge){
 									if (err) {cb(err, null);return;}
-									test.detail.transcripts.general = ge.getData();
+									profile.detail.transcripts.general = ge.getData();
 									
-									//console.log('running test: ', test.detail.transcripts);
-									cb(null, test);
+									cb(null, profile);
 									return;
 								});
 						});
 				} else {
-					//console.log('running test: ', test.detail.transcripts);
-					cb(null, test);
+					//console.log('running profile: ', profile.detail.transcripts);
+					cb(null, profile);
 					return;
 				}
 			 	});
@@ -291,39 +289,34 @@ module.exports.getUser = function(email, cb){
 module.exports.getUserArrayByType = function (type, cb) {
 	db.open('user');
 
-	var test = [];
+	var list = [];
 	
 	User
 		.find({type:type})
 		.exec(function(err,users){
 			if (err) {cb(err, null);return;}
-			test = [];
 			
 			// search for detail object
-			for (var i = 0; i < users.length;i++){
-				test.push(users[i].getData());
+			for (var i = 0; i < users.length; i++){
+				list.push(users[i].getData());
+			}
+		    for (var i = 0; i < list.length; i++){
 				UserDetail
-					.findOne({detail:test[i].detail.id})
+					.findOne({_id:list[i].detail})
 					.populate('transcripts contact')
 					.exec(function(err, details){
 						if (err) {cb(err, null);return;}
 						for (var n = 0; n < users.length; n++){
-							//console.log(details);
-							if(details._id === users[n].detail._id){
-								console.log(n + ' Wins!!!');
-								test[n].detail = details.getData();
-								console.log(test);
+							if(details._id.toString() === list[n].detail.toString()){
+								list[n].detail = details.getData();
 							}
 						}
 					});
-			}
-			
-			//console.log(test);
-			cb(null, test);
-			return;	
-		});
-
-	//db.close();
+		    }			
+		    
+		cb(null, list);
+		return;	
+	});
 };
 
 /*
