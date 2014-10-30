@@ -55,9 +55,10 @@ div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labe
                 span(class='sr-only') Close
               strong Warning!
               p Invalid user email or password! You Need to get this sorted out!
-          div(class='checkbox', style='margin-left: 22px; margin-bottom: 0px;')
-            input(type='checkbox', name='remember', value='Remember me')
-            | Remember me
+          .input-group
+            div(class='checkbox', style='margin-left: 22px; margin-bottom: 0px;')
+              input(type='checkbox', name='remember')
+              | Remember me
         div(class='modal-footer')
           button(type='submit', class='btn btn-lg btn-block') Submit
 

@@ -10,12 +10,12 @@ module.exports = function (data) {
 	 */
 	
 	router.get('/history', function(req, res) {
-		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: data.user });
+		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user });
 	});
 	
 	/* GET class to schedule page. */
 	router.get('/add', function(req, res) {
-		res.render('addrequest', { title: 'University Manager | Add Class', user: data.user });
+		res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user });
 	});
 	
 	/* POST class to schedule page. */
@@ -26,7 +26,7 @@ module.exports = function (data) {
 	
 	/* GET drop to schedule page. */
 	router.get('/drop', function(req, res) {
-		res.render('drop', { title: 'University Manager | Drop Class', user: data.user });
+		res.render('drop', { title: 'University Manager | Drop Class', user: req.session.user });
 	});
 	
 	/* POST drop to schedule page. */

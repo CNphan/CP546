@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var db = require('./db-locations');
 
+var newUser = require('./functions/userNew');
+
 // Models
 var User = require('./models/user');
 var UserDetail = require('./models/user-detail');
@@ -8,203 +10,78 @@ var UserContact = require('./models/user-contact');
 var UserTranscript = require('./models/user-transcript');
 var UserTranscriptHistory = require('./models/user-transcript-history');
 
-var userProfile;
-
-function newContact (req){
-	var type   = req.body.type_user;
-	var phone  = req.body.phone_user;
-	var addr   = req.body.addr_user;
-	var addr_2 = req.body.addr2_user;
-	var city   = req.body.city_user;
-	var state  = req.body.state_user;
-	var zip    = req.body.zip_user;
-	var country= req.body.country_user;
-	var userContact = new UserContact({
-        type:  type,
-        phone:  phone,
-        addr:   addr,
-        addr_2: addr_2,
-        city:   city,
-        state:  state,
-        zip:    zip,
-        country:country
-	});
-	userContact.save(function (err) {
-        if (err){
-            console.log(err);
-            return err;
-        }
-    });
-		console.log('contact id created: ' + userContact._id);
-		return userContact._id;
-}
-
-function newUserTranscript(req, record){
-	var school = req.body['school' + record];
-	var city   = req.body['city' + record];
-	var state  = req.body['state' + record];
-	var gpa    = req.body['gpa' + record];
-	var userTranscript = new UserTranscript({
-        school:  school,
-        city:    city,
-        state:   state,
-        gpa:     gpa
-	});
-    userTranscript.save(function (err) {
-        if (err){
-            console.log(err);
-            return err;
-        }
-    });
-		console.log('transcript id created: ' + record + userTranscript._id);
-		return userTranscript._id;
-}
-
-function newUserTranscriptHistory(general, college){
-	general = (general === undefined) ? {} : general;
-	college = (college === undefined) ? [] : college;
-	var userTranscriptHistory = new UserTranscriptHistory({
-		general: general,
-		college: college
-	});
-	userTranscriptHistory.save(function (err) {
-        if (err){
-            console.log(err);
-            return err;
-        }
-    });
-		console.log('transcript history id created: ' + userTranscriptHistory._id);
-		return userTranscriptHistory._id;
-}
-
-function newUserDetail(req, contact, transcripts){
-	console.log(transcripts, contact);
-	var birth  = req.body.birth_user;
-	var gender = req.body.gender_user;
-	var userDetail = new UserDetail({
-        birth:       birth,
-        gender:      gender,
-        contact:     contact,
-        transcripts: transcripts
-	});
-	userDetail.save(function (err) {
-        if (err){
-            console.log(err);
-            return err;
-        }
-    });
-		console.log('detail id created: ' + userDetail._id);
-		return userDetail._id;
-}
-
-function newUser(req, detail){
-	var user = new User();
-	var email    = req.body.email_user;
-	var password = (req.body.password === undefined) ? user.generateHash('newaccount') : user.generateHash(req.body.password);
-	var first    = req.body.first_user;
-	var last     = req.body.last_user;
-	var type     = (req.body.type === undefined) ? 'pending' : req.body.type;
-	var active   = (req.body.active === undefined) ? false : true ;
-	user = new User({
-        email:      email,
-        password:   password,
-        first:      first,
-        last:       last,
-        type:       type,
-        active:     active,
-        detail:     detail
-	});
-	user.save(function (err) {
-        if (err){
-            console.log(err);
-    		return err;
-        }
-    });
-		console.log('user id created: ' + user._id);
-		return user._id;
-}
-
-function newUserCollegeTranscripts(req){
-	var userCollegeTranscript;
-	var userCollegeTranscripts = [];
-	var transcriptCount = req.body.transcript_college_record_number;
-	if (req.body.transcript_college_record_number > 0){
-        for (var i = 1; i <= transcriptCount; i++){
-            userCollegeTranscript = newUserTranscript(req, '_transcript_' + i);
-            userCollegeTranscripts.push(userCollegeTranscript);
-        }
-	} else {
-		return;
-	}
-	return userCollegeTranscripts;
-}
+var backURL;
 
 module.exports.create = function (req, cb) {
-	var userContact, userGeneralTranscript, userCollegeTranscripts, userTranscriptHistory, userDetail, user;
-	db.open('user');
-
-	userGeneralTranscript = newUserTranscript(req, '_general');
-	userCollegeTranscripts = newUserCollegeTranscripts(req);
-	userTranscriptHistory = newUserTranscriptHistory(userGeneralTranscript, userCollegeTranscripts);
-	userContact = newContact(req);
-	userDetail = newUserDetail(req, userContact, userTranscriptHistory);
-	user = newUser(req, userDetail);
-
-	//db.close();
-};
-
-module.exports.authenticate = function (req, cb) {
-	var search, validPass;
-    var userValue = req.body.user;
-    var passValue = req.body.password;
 	db.open('user');
 	
+	var userContact;
+	var userGeneralTranscript;
+	var userCollegeTranscripts;
+	var userTranscriptHistory;
+	var userDetail;
+	var user;
+
+	userGeneralTranscript = newUser.Transcript(req, '_general');
+	userCollegeTranscripts = newUser.CollegeTranscripts(req);
+	userTranscriptHistory = newUser.TranscriptHistory(userGeneralTranscript, userCollegeTranscripts);
+	userContact = newUser.Contact(req);
+	userDetail = newUser.Detail(req, userContact, userTranscriptHistory);
+	user = newUser.User(req, userDetail);
+};
+
+module.exports.isUser = function (req, res, next){
+	if(req.session.user.type != 'default'){
+		next();
+	} 
+	backURL=req.header('Referer') || '/';
+	res.redirect(backURL);
+};
+
+module.exports.isUserType = function (req, res, cb){
+	return req.session.user.type;
+};
+
+module.exports.authenticate = function (req, res, cb) {
+	db.open('user');
+	
+	var validPass;
+	var user;
+	
 	User
-		.findOne({email:userValue})
+		.findOne({email:req.body.user})
 		.exec(function(err,data){
 			if (err) {
-				cb(err, null);
-				return;
+				cb(err);
+				return 0;
 			}
-			validPass = data.validPassword(passValue);
+			validPass = data.validPassword(req.body.password);
 			if(validPass){
-				this.userProfile = data;
-				cb(null, data);
-				return;
+				user = data.getData();
+				var sess = req.session;
+				sess.user = user;
+				console.log(req.body.remember);
+				if(req.body.remember === 'on'){
+					console.log('Logged in for one year.');
+					sess.cookie.maxage = 365 * 24 * 60 * 60 * 1000;
+				}
+				cb(null);
+				return user;
 			}
-			cb('Invalid User / Password!!! Try again.', null);
-			return;
+			cb('Invalid User / Password!!! Try again.');
+			return 0;
 		});
-
 };
 
-function findUser(email){
-	var profile;
-	User
-		.findOne({email:email})
-		.exec(function(err, user){
-			if (err) {return;}
-			profile = user.getData();
-			return profile;
-		});
-	return profile;
-}
 
-function findDetail(id){
-	
-}
+module.exports.deauthenticate = function (req, res, cb){
+	req.session.destroy(function(err) {
+		if (err != undefined){cb(err);return;}
+		cb(null);
+		return;
+	});
+};
 
-function findContact(id){
-	
-}
-
-function findTranscript(id){
-	
-}
-
-function findTranscriptHistory(id){
-	
-}
 
 module.exports.getUser = function(email, cb){
 	db.open('user');
@@ -331,7 +208,9 @@ module.exports.edit = function (cb) {
 
 module.exports.admin = function (cb) {
 	db.open('user', function(err){
-		if(err !== undefined){cb(err);}
+		
+	backURL=req.header('Referer') || '/';
+	res.redirect(backURL);{cb(err);}
 	});
 	
 	

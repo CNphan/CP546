@@ -4,7 +4,7 @@ module.exports = function (data) {
 	
 	/* GET home page. */
 	router.get('/', function(req, res) {
-		res.render('index', { title: 'University Manager', user: data.user});
+		res.render('index', { title: 'University Manager', user: req.session.user});
 	});
 	
 	return router;

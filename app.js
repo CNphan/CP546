@@ -1,11 +1,13 @@
 module.exports = function (data) {
 	
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var uuid = require('node-uuid');
 
 var routeHome = require('./routes/index')(data);
 var routeCatalog = require('./routes/catalog')(data);
@@ -19,14 +21,40 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Session create
+var hour = 3600000;
+
+app.use(session({
+	genid: function(req) {
+		  return uuid.v4();
+	},
+	secret: 'csu fullerton',
+	cookie: { secure:  true,
+			  expires: new Date(Date.now() + hour),
+			  maxAge:  hour },
+	saveUninitialized: true,
+    resave: true
+}));
+
+// Force HTTPS connections
+function ensureSecure(req, res, next){
+	var port = app.get('port') === 80 ? '' : ':' + app.get('port-ssl'); // Only for testing under local ENV
+	if(req.secure){
+	  // OK, continue
+	  return next();
+	};
+	res.redirect('https://' + req.hostname + port + req.url); 
+};
+app.all('*', ensureSecure); // Top of routes. (Required to push HTTPS.)
+
+// Route to data manipulation and content
 app.use('/', routeHome);
 app.use('/catalog', routeCatalog);
 app.use('/student', routeStudent);
@@ -44,7 +72,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.get('env') === 'dev') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {

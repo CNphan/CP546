@@ -4,22 +4,22 @@ module.exports = function (data) {
 
 	/* GET catalog page. */
 	router.get('/', function(req, res) {
-		res.render('catalog', { title: 'University Manager | Class Catalog', user: data.user });
+		res.render('catalog', { title: 'University Manager | Class Catalog', user: req.session.user });
 	});
 
 	/* GET schedule page. */
 	router.get('/schedule', function(req, res) {
-		res.render('schedule', { title: 'University Manager | My Schedule', user: data.user });
+		res.render('schedule', { title: 'University Manager | My Schedule', user: req.session.user });
 	});
 
 	/* GET add page. */
 	router.get('/addcourse', function(req, res) {
-		res.render('addcourse', { title: 'University Manager | Add Class Schedule', user: data.user });
+		res.render('addcourse', { title: 'University Manager | Add Class Schedule', user: req.session.user });
 	});
 
 	/* GET add page. */
 	router.get('/addschedule', function(req, res) {
-		res.render('addschedule', { title: 'University Manager | Class Scheduled added' });
+		res.render('addschedule', { title: 'University Manager | Class Scheduled added', user: req.session.user });
 	});
 
 	return router;
