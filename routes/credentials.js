@@ -2,7 +2,7 @@ module.exports = function (data) {
 	var express = require('express');
 	var router = express.Router();
 	var backURL;
-
+	
 	/* POST credentials page. */
 	router.post('/', function(req, res, next) {
 		var user;
@@ -30,7 +30,6 @@ module.exports = function (data) {
 
 	/* POST register page. */
 	router.post('/create', function(req, res, next) {
-		console.log('Step ' + 1);
 		data.user.create(req, function(err){
 			if(err){
 				console.log(err);
@@ -41,13 +40,13 @@ module.exports = function (data) {
 	});
 
 	/* POST password reset page. */
-	router.post('/create/reset', function(req, res) {
+	router.post('/create/reset', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
 	});
 	
 	/* GET/POST register page. */
-	router.get('/register', function(req, res) {
+	router.get('/register', function(req, res, next) {
 		res.render('register', { title: 'UM | Register for Fall 2014', user: req.session.user });
 	}).post('/register', function(req, res) {
 		backURL=req.header('Referer') || '/';
@@ -55,24 +54,25 @@ module.exports = function (data) {
 	});
 	
 	/* GET/POST add page. */
-	router.get('/add', function(req, res) {
+	router.get('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 		data.user.getUser('bclark@csu.fullerton.edu', function(err, user){
 			if (err){console.log(err);}
 			data.user.getUserArrayByType('pending', function (err, applicants) {
 				if (err){console.log(err);}
 				res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
-			});			
-			//console.log(data);
+			});
 		});
-	}).post('/add', function(req, res, next) {
+	}).post('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+		// WRITE RECORD LOGIC GOES HERE
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
 	});
 	
 	/* GET/POST deactivate page. */
-	router.get('/deactivate', function(req, res) {
+	router.get('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 		res.render('deactivate', { title: 'UM | De-Activate Credentials', user: req.session.user });
-	}).post('/deactivate', function(req, res, next) {
+	}).post('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+		// WRITE RECORD LOGIC GOES HERE
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
 	});

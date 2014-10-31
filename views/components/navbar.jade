@@ -1,5 +1,5 @@
 include ../mixins/navigation.jade
-- user = typeof(user) != 'undefined' ? user : { }
+- user = typeof(user) != 'undefined' ? user : { first: 'Guest',	last: 'User', type: 'default' }
 - school = typeof(school) != 'undefined' ? school : { }
 
 nav.navbar.navbar-default(role='navigation')

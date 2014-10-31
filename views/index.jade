@@ -21,33 +21,12 @@ block navStudent
   
 //-HTML content to display.
 block content
-
-  #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close(type="button", data-dismiss="modal")
-            span(aria-hidden="true")
-              | &times;
-              span.sr-only Close
-          h4.student-list-title.modal-title -Class Code- -Class Name-
-        .modal-body
-          select.form-control(multiple, size='10')
-            option Brandon L. CLark
-            option Christie Phan
-            option Hooman Rocks
-            option Panki Soni
-        .modal-footer
-          button.btn.btn-default(type="button", data-dismiss="modal") Close
-          button.btn.btn-primary(type="button") Drop
-          button.btn.btn-primary(type="button") Class History
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h1 #{title}
         p Welcome #{user.first}
-        button.btn.btn-primary.btn-lg(data-toggle="modal", data-target="#student-list") Launch demo modal
 
 
 // End Jade Template

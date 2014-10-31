@@ -9,8 +9,11 @@ var UserDetail = require('./models/user-detail');
 var UserContact = require('./models/user-contact');
 var UserTranscript = require('./models/user-transcript');
 var UserTranscriptHistory = require('./models/user-transcript-history');
+var Grant = require('./functions/route-grant');
 
 var backURL;
+
+module.exports.grant = Grant;
 
 module.exports.create = function (req, cb) {
 	db.open('user');
@@ -28,18 +31,6 @@ module.exports.create = function (req, cb) {
 	userContact = newUser.Contact(req);
 	userDetail = newUser.Detail(req, userContact, userTranscriptHistory);
 	user = newUser.User(req, userDetail);
-};
-
-module.exports.isUser = function (req, res, next){
-	if(req.session.user.type != 'default'){
-		next();
-	} 
-	backURL=req.header('Referer') || '/';
-	res.redirect(backURL);
-};
-
-module.exports.isUserType = function (req, res, cb){
-	return req.session.user.type;
 };
 
 module.exports.authenticate = function (req, res, cb) {
