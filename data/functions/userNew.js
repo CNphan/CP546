@@ -62,7 +62,7 @@ module.exports.CollegeTranscripts = function(req){
 	var transcriptCount = req.body.transcript_college_record_number;
 	if (req.body.transcript_college_record_number > 0){
         for (var i = 1; i <= transcriptCount; i++){
-            userCollegeTranscript = module.exports.UserTranscript(req, '_transcript_' + i);
+            userCollegeTranscript = module.exports.Transcript(req, '_transcript_' + i);
             userCollegeTranscripts.push(userCollegeTranscript);
         }
 	} else {

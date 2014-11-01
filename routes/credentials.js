@@ -9,10 +9,13 @@ module.exports = function (data) {
 		data.user.authenticate(req, res, function(err){
 			if(err){
 				console.log(err);
-				next(null, false, {error:err});
+				backURL=req.header('Referer') || '/';
+				res.redirect(backURL);
+				next({error:err});
+			} else {
+				backURL=req.header('Referer') || '/';
+				res.redirect(backURL);
 			}
-			backURL=req.header('Referer') || '/';
-			res.redirect(backURL);
 		});
 	});
 	
@@ -55,13 +58,10 @@ module.exports = function (data) {
 	
 	/* GET/POST add page. */
 	router.get('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		data.user.getUser('bclark@csu.fullerton.edu', function(err, user){
-			if (err){console.log(err);}
 			data.user.getUserArrayByType('pending', function (err, applicants) {
 				if (err){console.log(err);}
 				res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 			});
-		});
 	}).post('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 		// WRITE RECORD LOGIC GOES HERE
 		backURL=req.header('Referer') || '/';

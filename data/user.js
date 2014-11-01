@@ -42,10 +42,17 @@ module.exports.authenticate = function (req, res, cb) {
 	User
 		.findOne({email:req.body.user})
 		.exec(function(err,data){
+			console.log(data);
+			console.log(err);
 			if (err) {
 				cb(err);
 				return 0;
 			}
+			if(data === null){
+				cb('Invalid User / Password!! Try again.');
+				return 0;
+			}
+			
 			validPass = data.validPassword(req.body.password);
 			if(validPass){
 				user = data.getData();
