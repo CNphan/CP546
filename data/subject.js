@@ -2,47 +2,46 @@
 var mongoose = require('mongoose');
 var db = require('./db-locations.js');
 
-module.exports.create = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
+var Subject = require('./models/subject');
+
+var newSubject = require('./functions/subjectNew');
+
+var backURL;
+
+module.exports.create = function (req, cb) {
+	db.open('school');
+	
+	newSubject.Subject(req, function(err, id){
+		if(err){
+			console.log(err);
+			db.close();
+			cb(err,null);
+			return;
+		} else {
+			db.close();
+			cb(null, id);
+			return;
+		}
 	});
-	
-	
-	db.close();
 };
 
-module.exports.edit = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
+module.exports.getSubjects = function (cb) {
+	db.open('school');
+	
+	Subject
+		.find({})
+		.exec(function(err, subjects){
+			console.log(subjects);
+			if(err){
+				db.close();
+				console.log(err);
+				cb(err,null);
+				return;
+			} else {
+				db.close();
+				cb(null, subjects);
+				return;
+			}
 	});
 	
-	
-	db.close();
-};
-
-module.exports.searchObject = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.searchArray = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.admin = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
 };

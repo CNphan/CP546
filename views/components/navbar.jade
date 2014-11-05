@@ -1,6 +1,7 @@
 include ../mixins/navigation.jade
 - user = typeof(user) != 'undefined' ? user : { first: 'Guest',	last: 'User', type: 'default' }
 - school = typeof(school) != 'undefined' ? school : { }
+- var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
 nav.navbar.navbar-default(role='navigation')
   .container-fluid

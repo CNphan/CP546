@@ -59,8 +59,14 @@ module.exports = function (data) {
 	/* GET/POST add page. */
 	router.get('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 			data.user.getUserArrayByType('pending', function (err, applicants) {
-				if (err){console.log(err);}
-				res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
+				if(err){
+					console.log(err);
+					backURL=req.header('Referer') || '/';
+					res.redirect(backURL);
+					next({error:err});
+				} else {
+					res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
+				}
 			});
 	}).post('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 		// WRITE RECORD LOGIC GOES HERE

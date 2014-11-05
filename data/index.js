@@ -11,12 +11,3 @@ module.exports.catalog = Catalog;
 module.exports.schedule = Schedule;
 module.exports.course = Course;
 module.exports.subject = Subject;
-
-/*
-module.exports = {
-	"user":{"type":"admin",
-			"id":0,
-			"first":"Guest",
-			"last":"User"}
-};
-*/

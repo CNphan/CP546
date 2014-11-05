@@ -5,8 +5,26 @@ module.exports = function (data) {
 	
 	/* GET catalog page. */
 	router.get('/', function(req, res, next) {
-		res.render('catalog', { title: 'University Manager | Class Catalog', user: req.session.user });
+		data.catalog.getCurrent(function(err, id){
+			if(err){
+				console.log(err);
+				backURL=req.header('Referer') || '/';
+				res.redirect(backURL);
+				next({error:err});
+			} else {
+				data.catalog.getCatalog(id, function(err, catalog){
+					if(err){
+						console.log(err);
+						next({error:err});
+					} else {
+						console.log(catalog);
+						res.render('catalog', { title: 'UM | Class Catalog', user: req.session.user, catalog: catalog });
+					}
+				});
+			}
+		});
 	});
+	
 
 	/* GET schedule page. */
 	router.get('/schedule', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {
@@ -15,11 +33,21 @@ module.exports = function (data) {
 
 	/* GET add page. */
 	router.get('/addcourse', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		res.render('addcourse', { title: 'University Manager | Add Class Schedule', user: req.session.user });
+		data.subject.getSubjects(function (err, data){
+			if(err){
+				console.log(err);
+				backURL=req.header('Referer') || '/';
+				res.redirect(backURL);
+				next({error:err});
+			} else {
+				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: data });
+			}
+		});
 	});
 
 	/* GET add page. */
 	router.get('/addschedule', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+		
 		res.render('addschedule', { title: 'University Manager | Class Scheduled added', user: req.session.user });
 	});
 

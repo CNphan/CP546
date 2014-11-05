@@ -31,6 +31,8 @@ module.exports.create = function (req, cb) {
 	userContact = newUser.Contact(req);
 	userDetail = newUser.Detail(req, userContact, userTranscriptHistory);
 	user = newUser.User(req, userDetail);
+	
+	db.close();
 };
 
 module.exports.authenticate = function (req, res, cb) {
@@ -45,10 +47,12 @@ module.exports.authenticate = function (req, res, cb) {
 			console.log(data);
 			console.log(err);
 			if (err) {
+				db.close();
 				cb(err);
 				return 0;
 			}
 			if(data === null){
+				db.close();
 				cb('Invalid User / Password!! Try again.');
 				return 0;
 			}
@@ -63,9 +67,11 @@ module.exports.authenticate = function (req, res, cb) {
 					console.log('Logged in for one year.');
 					sess.cookie.maxage = 365 * 24 * 60 * 60 * 1000;
 				}
+				db.close();
 				cb(null);
 				return user;
 			}
+			db.close();
 			cb('Invalid User / Password!!! Try again.');
 			return 0;
 		});
@@ -74,14 +80,107 @@ module.exports.authenticate = function (req, res, cb) {
 
 module.exports.deauthenticate = function (req, res, cb){
 	req.session.destroy(function(err) {
-		if (err != undefined){cb(err);return;}
+		if (err !== undefined){cb(err);return;}
 		cb(null);
 		return;
 	});
 };
 
 
-module.exports.getUser = function(email, cb){
+module.exports.getUserById = function(id, cb){
+	
+	var profile = [];
+	
+	//search for user object
+	db.open('user');
+	User
+		.findOne({_id:id})
+		.exec(function(err, user){
+			if (err){cb(err, null);return;}
+			
+			profile = user.getData();
+			// search for detail object
+			
+			if(user.detail){
+				UserDetail
+					.findOne({detail:user.detail._id})
+					.exec(function(err, details){
+						if (err) {cb(err, null);return;}
+						
+						profile.detail = [];
+						profile.detail = details.getData();
+						
+						//search for contact objects
+						var contactId = [];
+						profile.detail.contact = [];
+						for (n in details.contact){
+							if(n == 0) {contactId.push(details.contact[n]);}
+						}
+						console.log(profile);
+						for(var i =0;i<details.contact.length; i++){
+							UserContact
+								.find({_id:contactId[i]})
+								.exec(function(err, contact){	
+									if (err) {cb(err, null);return;}
+									
+									for(n in contact){
+										profile.detail.contact.push(contact[n].getData());
+									}
+								});
+						}
+						console.log(profile);
+						// search for transcript history object
+						if(details.transcripts){
+							UserTranscriptHistory
+								.findOne({_id:details.transcripts})
+								.exec(function(err, history){
+									if (err) {cb(err, null);return;}
+									
+									profile.detail.transcripts = history.getData();
+									
+									//search for college transcript objects
+									var transcriptId = [];
+									profile.detail.transcripts.college = [];
+									for (var i = 0; i < history.college.length; i++){
+										transcriptId.push(history.college[i]);
+									}
+									for(var j = 0; j < transcriptId.length; j++){
+										UserTranscript
+											.findOne({_id:transcriptId[j]})
+											.exec(function(err, transcripts){
+												if (err) {cb(err, null);return;}
+												
+												profile.detail.transcripts.college.push(transcripts.getData());
+											});
+									}
+									
+									// search for ge transcript object
+									UserTranscript
+										.findOne({_id:history.general})
+										.exec(function(err, ge){
+											if (err) {cb(err, null);return;}
+											
+											profile.detail.transcripts.general = ge.getData();
+											db.close();
+											cb(null, profile);
+											return;
+										});
+								});
+						} else {
+							db.close();
+							cb(null, profile);
+							return;
+						}
+						});
+			} else {
+				db.close();
+				cb(null, profile);
+				return;
+			}
+		});
+};
+
+module.exports.getUserByEmail = function(email, cb){
 	db.open('user');
 	
 	var profile = [];
@@ -90,14 +189,14 @@ module.exports.getUser = function(email, cb){
 	User
 		.findOne({email:email})
 		.exec(function(err, user){
-			if (err) {cb(err, null);return;}
+			if (err) {db.close();cb(err, null);return;}
 			profile = user.getData();
 			
 			// search for detail object
 			UserDetail
 			.findOne({detail:user.detail._id})
 			.exec(function(err, details){
-				if (err) {cb(err, null);return;}
+				if (err) {db.close();cb(err, null);return;}
 				profile.detail = [];
 				profile.detail = details.getData();
 				
@@ -111,7 +210,7 @@ module.exports.getUser = function(email, cb){
 					UserContact
 						.find({_id:contactId[i]})
 						.exec(function(err, contact){
-							if (err) {cb(err, null);return;}
+							if (err) {db.close();cb(err, null);return;}
 							for(n in contact){
 								profile.detail.contact.push(contact[n].getData());
 							}
@@ -123,7 +222,7 @@ module.exports.getUser = function(email, cb){
 					UserTranscriptHistory
 						.findOne({_id:details.transcripts})
 						.exec(function(err, history){
-							if (err) {cb(err, null);return;}
+							if (err) {db.close();cb(err, null);return;}
 							profile.detail.transcripts = history.getData();
 							
 							//search for college transcript objects
@@ -132,11 +231,11 @@ module.exports.getUser = function(email, cb){
 							for (var i = 0; i < history.college.length; i++){
 								transcriptId.push(history.college[i]);
 							}
-							for(var i = 0; i < transcriptId.length; i++){
+							for(var j = 0; j < transcriptId.length; j++){
 								UserTranscript
-									.findOne({_id:transcriptId[i]})
+									.findOne({_id:transcriptId[j]})
 									.exec(function(err, transcripts){
-										if (err) {cb(err, null);return;}
+										if (err) {db.close();cb(err, null);return;}
 										profile.detail.transcripts.college.push(transcripts.getData());
 									});
 							}
@@ -145,19 +244,20 @@ module.exports.getUser = function(email, cb){
 							UserTranscript
 								.findOne({_id:history.general})
 								.exec(function(err, ge){
-									if (err) {cb(err, null);return;}
+									if (err) {db.close();cb(err, null);return;}
 									profile.detail.transcripts.general = ge.getData();
-									
+									db.close();
 									cb(null, profile);
 									return;
 								});
 						});
 				} else {
 					//console.log('running profile: ', profile.detail.transcripts);
+					db.close();
 					cb(null, profile);
 					return;
 				}
-			 	});
+				});
 		});
 };
 
@@ -169,7 +269,7 @@ module.exports.getUserArrayByType = function (type, cb) {
 	User
 		.find({type:type})
 		.exec(function(err,users){
-			if (err) {cb(err, null);return;}
+			if (err) {db.close();cb(err, null);return;}
 			
 			// search for detail object
 			for (var i = 0; i < users.length; i++){
@@ -180,7 +280,7 @@ module.exports.getUserArrayByType = function (type, cb) {
 					.findOne({_id:list[i].detail})
 					.populate('transcripts contact')
 					.exec(function(err, details){
-						if (err) {cb(err, null);return;}
+						if (err) {db.close();cb(err, null);return;}
 						for (var n = 0; n < users.length; n++){
 							if(details._id.toString() === list[n].detail.toString()){
 								list[n].detail = details.getData();
@@ -188,7 +288,7 @@ module.exports.getUserArrayByType = function (type, cb) {
 						}
 					});
 		    }			
-		    
+		db.close();
 		cb(null, list);
 		return;	
 	});
