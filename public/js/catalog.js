@@ -7,9 +7,8 @@ function isSubject(name){
   }
   return false;
 }
-var getSubjects = function (schedules){
+var nause = function (schedules){
   for(var n = 0; n < schedules.length; n++){
-    console.log(n);
     if(!isSubject(n.course.subject.name)){
       //console.log(n);
       //subjects.push(n.course.subject.name);

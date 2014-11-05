@@ -31,10 +31,6 @@ module.exports.getCatalog = function (id, cb) {
 	var subjects = [];
 	function isSubject(name){
 	  for(n in subjects){
-		  console.log(name.code);
-		  console.log(subjects[n].code);
-
-		  console.log(subjects[n].code == name.code);
 	    if(subjects[n].code == name.code){
 	      return true;
 	    }
@@ -66,8 +62,6 @@ module.exports.getCatalog = function (id, cb) {
 					
 					for(i in schedules){
 						catalog.schedule[i] = schedules[i].getData();
-						console.log(catalog.schedule[j]);
-						console.log(schedules[i].getDays());
 					}
 					
 					//console.log(catalog);
@@ -85,6 +79,7 @@ module.exports.getCatalog = function (id, cb) {
 									db.close();
 									catalog.subjects = getSubjects(catalog.schedule);
 									var k = 0 ;
+									db.open('user');
 									for(z in schedules){
 										User.getUserById(catalog.schedule[z].instructor, function(err, teacher){
 											catalog.schedule[k].instructor = teacher;
@@ -92,6 +87,7 @@ module.exports.getCatalog = function (id, cb) {
 											k++;
 											if( k == schedules.length ){
 												//console.log(catalog.schedule);
+												db.close();
 												cb(null, catalog);
 												return;
 											}

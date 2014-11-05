@@ -92,7 +92,6 @@ module.exports.getUserById = function(id, cb){
 	var profile = [];
 	
 	//search for user object
-	db.open('user');
 	User
 		.findOne({_id:id})
 		.exec(function(err, user){
@@ -161,22 +160,22 @@ module.exports.getUserById = function(id, cb){
 												if (err) {cb(err, null);return;}
 												
 												profile.detail.transcripts.general = ge.getData();
-												db.close();
 												cb(null, profile);
 												return;
 											});
 									});
 							} else {
-								db.close();
 								cb(null, profile);
 								return;
 							}
 							});
 				} else {
-					db.close();
 					cb(null, profile);
 					return;
 				}
+			} else {
+				cb('Not Found', null);
+				return;
 			}
 		});
 };
