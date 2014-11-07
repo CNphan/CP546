@@ -6,10 +6,10 @@ module.exports.isUserType = function (req){
 
 module.exports.isUser = function (req, res, next){
 	if(req.session.user.type != 'default'){
-		next();
+		return next();
 	} 
 	backURL=req.header('Referer') || '/';
-	res.redirect(backURL);
+	return res.redirect(backURL);
 };
 
 function isAdmin(req){
@@ -42,55 +42,55 @@ function isStudent(req){
 module.exports.Admin = function (req, res, next){
 	if(!isAdmin(req)){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.Teacher = function (req, res, next){
 	if(!isTeacher(req)){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.Student = function (req, res, next){
 	if(!isStudent(req)){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.AdminTeacher = function (req, res, next){
 	if(!(isAdmin(req) || isTeacher(req))){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.StudentTeacher = function (req, res, next){
 	if(!(isTeacher(req) || isStudent(req))){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.StudentAdmin = function (req, res, next){
 	if(!(isAdmin(req) || isStudent(req))){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };
 
 module.exports.StudentTeacherAdmin = function (req, res, next){
 	if(!(isAdmin(req) || isTeacher(req) || isStudent(req))){
 		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		return res.redirect(backURL);
 	}
-	next();
+	return next();
 };

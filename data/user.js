@@ -13,6 +13,21 @@ var Grant = require('./functions/route-grant');
 
 var backURL;
 
+var guestCheckIn = function(req){
+	req.session = {};
+	var sess = req.session;
+	sess.user = {first: 'Guest', last: 'User', type: 'guest'};
+};
+
+module.exports.userCheck = function(req, res, next){
+	if(!req.session.user){
+		var sess = req.session;
+		sess.user = {first: 'Guest', last: 'User', type: 'guest'};
+		return res.redirect('/');
+	}
+	return next();
+};
+
 module.exports.grant = Grant;
 
 module.exports.create = function (req, cb) {
@@ -44,7 +59,6 @@ module.exports.authenticate = function (req, res, cb) {
 	User
 		.findOne({email:req.body.user})
 		.exec(function(err,data){
-			console.log(data);
 			console.log(err);
 			if (err) {
 				db.close();
@@ -62,9 +76,8 @@ module.exports.authenticate = function (req, res, cb) {
 				user = data.getData();
 				var sess = req.session;
 				sess.user = user;
-				console.log(req.body.remember);
+				// Hold session for one year if (remember) is checked.
 				if(req.body.remember === 'on'){
-					console.log('Logged in for one year.');
 					sess.cookie.maxage = 365 * 24 * 60 * 60 * 1000;
 				}
 				db.close();
@@ -84,6 +97,7 @@ module.exports.deauthenticate = function (req, res, cb){
 		cb(null);
 		return;
 	});
+    //guestCheckIn(req);
 };
 
 
@@ -180,23 +194,22 @@ module.exports.getUserById = function(id, cb){
 		});
 };
 
-module.exports.getUserByEmail = function(email, cb){
-	db.open('user');
-	
+module.exports.getUserByEmail = function(email, cb){	
 	var profile = [];
 	
 	//search for user object
+	db.open('user');
 	User
 		.findOne({email:email})
 		.exec(function(err, user){
-			if (err) {db.close();cb(err, null);return;}
+			if (err) {cb(err, null);return;}
 			profile = user.getData();
 			
 			// search for detail object
 			UserDetail
 			.findOne({detail:user.detail._id})
 			.exec(function(err, details){
-				if (err) {db.close();cb(err, null);return;}
+				if (err) {cb(err, null);return;}
 				profile.detail = [];
 				profile.detail = details.getData();
 				
@@ -210,7 +223,7 @@ module.exports.getUserByEmail = function(email, cb){
 					UserContact
 						.find({_id:contactId[i]})
 						.exec(function(err, contact){
-							if (err) {db.close();cb(err, null);return;}
+							if (err) {cb(err, null);return;}
 							for(n in contact){
 								profile.detail.contact.push(contact[n].getData());
 							}
@@ -222,7 +235,7 @@ module.exports.getUserByEmail = function(email, cb){
 					UserTranscriptHistory
 						.findOne({_id:details.transcripts})
 						.exec(function(err, history){
-							if (err) {db.close();cb(err, null);return;}
+							if (err) {cb(err, null);return;}
 							profile.detail.transcripts = history.getData();
 							
 							//search for college transcript objects
@@ -235,7 +248,7 @@ module.exports.getUserByEmail = function(email, cb){
 								UserTranscript
 									.findOne({_id:transcriptId[j]})
 									.exec(function(err, transcripts){
-										if (err) {db.close();cb(err, null);return;}
+										if (err) {cb(err, null);return;}
 										profile.detail.transcripts.college.push(transcripts.getData());
 									});
 							}
@@ -244,7 +257,7 @@ module.exports.getUserByEmail = function(email, cb){
 							UserTranscript
 								.findOne({_id:history.general})
 								.exec(function(err, ge){
-									if (err) {db.close();cb(err, null);return;}
+									if (err) {cb(err, null);return;}
 									profile.detail.transcripts.general = ge.getData();
 									db.close();
 									cb(null, profile);
@@ -262,36 +275,37 @@ module.exports.getUserByEmail = function(email, cb){
 };
 
 module.exports.getUserArrayByType = function (type, cb) {
-	db.open('user');
-
 	var list = [];
 	
+	db.open('user');
 	User
 		.find({type:type})
 		.exec(function(err,users){
-			if (err) {db.close();cb(err, null);return;}
+			if (err) {cb(err, null);return;}
 			
 			// search for detail object
 			for (var i = 0; i < users.length; i++){
 				list.push(users[i].getData());
 			}
-		    for (var i = 0; i < list.length; i++){
+		    for (i in list){
 				UserDetail
 					.findOne({_id:list[i].detail})
 					.populate('transcripts contact')
 					.exec(function(err, details){
-						if (err) {db.close();cb(err, null);return;}
-						for (var n = 0; n < users.length; n++){
+						db.close();
+						if (err) {cb(err, null);return;}
+						for (n in users){
 							if(details._id.toString() === list[n].detail.toString()){
 								list[n].detail = details.getData();
 							}
 						}
 					});
-		    }			
-		db.close();
-		cb(null, list);
-		return;	
-	});
+		    }	
+			console.log('User');
+			cb(null, list);
+		    return;			
+		});
+	return;	
 };
 
 /*

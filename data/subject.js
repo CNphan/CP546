@@ -31,7 +31,6 @@ module.exports.getSubjects = function (cb) {
 	Subject
 		.find({})
 		.exec(function(err, subjects){
-			console.log(subjects);
 			if(err){
 				db.close();
 				console.log(err);

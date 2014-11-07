@@ -42,17 +42,21 @@ app.use(session({
 	saveUninitialized: true,
     resave: true
 }));
+app.use(function(req, res, next){
+	var checkUser = data.user.userCheck(req, res, next);
+});
 
 // Force HTTPS connections
-function ensureSecure(req, res, next){
+function ensure(req, res, next){
 	var port = app.get('port') === 80 ? '' : ':' + app.get('port-ssl'); // Only for testing under local ENV
+	
 	if(req.secure){
 	  // OK, continue
 	  return next();
 	};
 	res.redirect('https://' + req.hostname + port + req.url); 
 };
-app.all('*', ensureSecure); // Top of routes. (Required to push HTTPS.)
+app.all('*', ensure); // Top of routes. (Required to push HTTPS.)
 
 // Route to data manipulation and content
 app.use('/', routeHome);
@@ -83,14 +87,6 @@ if (app.get('env') === 'dev') {
 }
 
 // production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 return app;
 };

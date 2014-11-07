@@ -11,7 +11,6 @@ module.exports = function (data) {
 				console.log(err);
 				backURL=req.header('Referer') || '/';
 				res.redirect(backURL);
-				next({error:err});
 			} else {
 				backURL=req.header('Referer') || '/';
 				res.redirect(backURL);
@@ -61,10 +60,9 @@ module.exports = function (data) {
 			data.user.getUserArrayByType('pending', function (err, applicants) {
 				if(err){
 					console.log(err);
-					backURL=req.header('Referer') || '/';
-					res.redirect(backURL);
-					next({error:err});
+					next(err);
 				} else {
+					console.log('You are receiving the (applicants) Object', applicants);
 					res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 				}
 			});

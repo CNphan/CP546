@@ -17,7 +17,7 @@ module.exports = function (data) {
 						console.log(err);
 						next({error:err});
 					} else {
-						console.log(catalog);
+						console.log('You are receiving the (catalog) Object', catalog);
 						res.render('catalog', { title: 'UM | Class Catalog', user: req.session.user, catalog: catalog });
 					}
 				});
@@ -36,10 +36,9 @@ module.exports = function (data) {
 		data.subject.getSubjects(function (err, data){
 			if(err){
 				console.log(err);
-				backURL=req.header('Referer') || '/';
-				res.redirect(backURL);
 				next({error:err});
 			} else {
+				console.log('You are receiving the (subjects) Object', data);
 				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: data });
 			}
 		});
