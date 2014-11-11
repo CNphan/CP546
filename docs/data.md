@@ -134,3 +134,60 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | name             | string value               | null        |
 | president        | string value               | null        |
 | contact          | contact Object             | null        |
+
+
+### User Course Schedule & History
+These are unique objects that have a limited amount of information compared to their parent models.  These models represent a student and a teachers course history. This is done for archiving needs.
+
+**Value name passed to template** : user-schedule (Passed to views as *schedule* Object
+
+| Value            | Option                                | Default     |
+| ---------------- |:-------------------------------------:| -----------:|
+| id               | numeric auto assigned key             | null        |
+| user             | user Object                           | null        |
+| session          | session Object                        | null        |
+| schedule         | schedule Object                       | null        |
+| course           | course Object                         | null        |
+| active           | true : false                          | null        |
+| activity         | Array(reserved for drop cause)        | null        |
+
+
+**Value name passed to template** : session
+
+| Value            | Option                                     | Default     |
+| ---------------- |:------------------------------------------:| -----------:|
+| id               | numeric auto assigned key                  | null        |
+| code             | (4 digit year) - (alpha code)              | null        |
+| description      | string value                               | null        |
+
+
+**Value name passed to template** : course
+
+| Value            | Option                               | Default     |
+| ---------------- |:------------------------------------:| -----------:|
+| id               | numeric auto assigned key            | null        |
+| code             | 3 alpha - 3 number                   | null        |
+| units            | number value                         | null        |
+| name             | string value                         | null        |
+| instructor       | user Object                          | null        |
+
+
+**Value name passed to template** : schedule
+
+| Value            | Option                                | Default     |
+| ---------------- |:-------------------------------------:| -----------:|
+| id               | numeric auto assigned key             | null        |
+| daily            | daily Object                          | null        |
+| start_time       | Date Object                           | null        |
+| min_length       | number value (ie 60 = 60 min)         | null        |
+| location         | string value                          | null        |
+
+
+**Value name passed to template** : user
+
+| Value            | Option                                            | Default     |
+| ---------------- |:-------------------------------------------------:| -----------:|
+| id               |  numeric auto assigned key                        | null        |
+| first            |  string value                                     | null        |
+| last             |  string value                                     | null        |
+| email            |  string value                                     | null        |

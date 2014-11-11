@@ -185,10 +185,10 @@ This is used for selecting an existing option from a drop down list.
       //- Content goes here.
 ```
 
-##### Jade JavaScript Usage
+#### Jade JavaScript Usage
 Jade allows for shorthand of JavaScript to be easily integrated with HTML.
 
-###### Objects
+##### Objects
 This is useful for tracking or simplifying the data your working with.
 
 ```jade
@@ -201,7 +201,7 @@ p #{valueTwo}
 p #{valueThree}
 ```
 
-###### For Loop
+##### For Loop
 This is useful for creating list.  It treats the *i* value differently than JavaScript and holds the arrays current positions object instead of the position number.
 
 ```jade
@@ -210,7 +210,7 @@ ul
     li #{i.value}
 ```
 
-###### If Statements
+##### If Statements
 This is good for things like user type checks, if value exist and more.
 ```jade
 if valueOne == valueTwo
@@ -219,4 +219,40 @@ else if valueThree
   //- Do something here if value exist
 else
   //- Do some default thing here  
+```
+#### JavaScript & jQuery Usage
+jQuery allows for easy element manipulation. Use the notes here to assist you in applying javascript code to templates. 
+
+##### Pass Jade object to JavaScript File
+This is useful for tracking or simplifying the data your working with.
+```jade
+  script(type='text/javascript').
+    var data = !{JSON.stringify(data)}
+```
+Now it can be used in a javascript file
+```js
+$(function() {
+  console.log(data);
+});
+```
+
+##### OnCLick Listener
+This can easily be adjusted to other event types that can occur on an element.  It is usefule for interactive views.
+
+First you can use either a Id or Class HTML tag to identify elements.
+```jade
+button#btnId.btn.btn-default(type='button') Submit 1
+button.btnClass.btn.btn-default(type='button') Submit 2
+```
+
+In your javascript file:
+```js
+$(function() {
+  $('#btnId').on('click', function () {
+    // Do something here
+  });
+  $('.btnClass').on('click', function () {
+    // Do something here
+  });
+});
 ```
