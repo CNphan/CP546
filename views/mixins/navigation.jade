@@ -3,27 +3,32 @@ mixin navItem(target, title)
     a(href=target) #{title}
     
 mixin adminNav()
-  li.dropdown-header Administrator Menu
+  li.dropdown-header Administrator Menu  
+  li.divider  
+  li.dropdown-header Catalog Management
   +navItem('/catalog/addschedule', 'Add Schedule')
   +navItem('/catalog/addcourse', 'Add Course')
   li.divider
-  +navItem('/credentials/add', 'Approve/Add User')
-  +navItem('/credentials/deactivate', 'De-Activate User')
+  +navItem('/credentials/manage', 'Manage Users')
   block adminNav
   
 mixin studentNav()
   li.dropdown-header Student Menu
+  li.divider  
   +navItem('/catalog/schedule', 'My Schedule')
-  li.divider
+  li.divider  
+  li.dropdown-header Course Management
   +navItem('/student/add', 'Add Course')
   +navItem('/student/drop', 'Drop Course')
   block studentNav
     
 mixin teacherNav()
   li.dropdown-header Teacher Menu
+  li.divider  
   +navItem('/catalog/schedule', 'My Schedule')
   li.divider
-  +navItem('/student/history', 'Student\'s Course History')
+  li.dropdown-header Manage Students
+  +navItem('/student/history', 'Student History')
   +navItem('/student/drop', 'Drop Student')
   block teachNav
 

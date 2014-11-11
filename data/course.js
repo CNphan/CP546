@@ -2,6 +2,8 @@
 var mongoose = require('mongoose');
 var db = require('./db-locations.js');
 
+var Course = require('./models/subject-course');
+
 module.exports.create = function () {
 	db.open('school', function(err){
 		if(err !== undefined){return;}
@@ -11,38 +13,20 @@ module.exports.create = function () {
 	db.close();
 };
 
-module.exports.edit = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
+module.exports.getCourseList = function (cb) {
+	var courses = [];
 	
-	
-	db.close();
-};
-
-module.exports.searchObject = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.searchArray = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.admin = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
+	db.open('school');
+	Course
+		.find({})
+		.exec(function(err, data){
+			db.close();
+			if(err){cb(err,null);return;}
+			
+			for(i in data){
+				courses.push(data[i].getData());
+			}
+			cb(null, courses);
+			return;
+		});
 };

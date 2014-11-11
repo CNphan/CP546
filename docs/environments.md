@@ -53,7 +53,7 @@ Got to www.nodeclipse.org/updates for instruction on how to install new environm
 
 
 #### Existing Installation
-To add nodeeclipse to an existing installation of eclipse goto the application menu bar and select *Help > Install New Software*.  In the *Work with:* input field enter this address `http://dl.bintray.com/nodeclipse/nodeclipse/0.17`.  Select the core package and any other desired packages and install.
+To add NodeEclipse to an existing installation of eclipse goto the application menu bar and select *Help > Install New Software*.  In the *Work with:* input field enter this address `http://dl.bintray.com/nodeclipse/nodeclipse/0.17`.  Select the core package and any other desired packages and install.
 
 ### Installing MongoDB
 Goto [www.mongodb.org/downloads](http://www.mongodb.org/downloads) and download version 2.2.7 package that relates to your operating system.  Follow the installers instruction, if any.

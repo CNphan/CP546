@@ -10,13 +10,7 @@ var schoolSchema = mongoose.Schema({
     president:       {type:  mongoose.Schema.Types.ObjectId,
                       ref:   User.schema},
     contact:         [{type: mongoose.Schema.Types.ObjectId,
-                       ref:  UserContact.schema}],
-    session_current: {type:  mongoose.Schema.Types.ObjectId,
-                      ref:   SchoolSession.schema},
-    session_previous:{type:  mongoose.Schema.Types.ObjectId,
-                      ref:   SchoolSession.schema},
-    session_next:    {type:  mongoose.Schema.Types.ObjectId,
-                      ref:   SchoolSession.schema}
+                       ref:  UserContact.schema}]
 });
 
 // create the model for users and expose it to our app

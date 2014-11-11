@@ -1,4 +1,5 @@
 #University Manager Documentation
+Revised (November 10, 2010)
 
 ##Table of Contents
 1. [Introduction](about.md)
@@ -41,11 +42,11 @@
     1. [Step One](repository.md#step-one-fork-code)
     2. [Step Two](repository.md#step-two-edit-forked-copy)
     3. [Step Three](repository.md#step-three-create-pull-request)
-8. [Data](data.md)
+8. [Data Models](data.md)
   1. [User Objects](data.md#user-profile-objects)
   2. [Course & Schedule Objects](data.md#course-schedule-objects)
   3. [School Object](data.md#school-profile)
-9. [Navigation](pages.md)
+9. [Interface Views](views.md)
 10. [Templates](template.md)
   1. [Included Libraries](template.md#libraries-in-use)
   2. [Creating A Page](template.md#creating-a-page)

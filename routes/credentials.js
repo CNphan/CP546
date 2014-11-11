@@ -56,14 +56,14 @@ module.exports = function (data) {
 	});
 	
 	/* GET/POST add page. */
-	router.get('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+	router.get('/manage', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 			data.user.getUserArrayByType('pending', function (err, applicants) {
 				if(err){
 					console.log(err);
 					next(err);
 				} else {
 					console.log('You are receiving the (applicants) Object', applicants);
-					res.render('adduser', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
+					res.render('manageusers', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 				}
 			});
 	}).post('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
@@ -74,7 +74,7 @@ module.exports = function (data) {
 	
 	/* GET/POST deactivate page. */
 	router.get('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		res.render('deactivate', { title: 'UM | De-Activate Credentials', user: req.session.user });
+		res.redirect('/credentials/manage');
 	}).post('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 		// WRITE RECORD LOGIC GOES HERE
 		backURL=req.header('Referer') || '/';

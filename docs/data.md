@@ -1,84 +1,94 @@
-## Data Design
+## Data Models
 Node.js and MongoDB both work with JSON data by default.  Data stores passed to the template will be processes this way.  Data passed to the templates is defined as follows.
 
 ### User Profile Objects
 **Value name passed to template** : user
 
-| Value            | Option                                  | Default     |
-| ---------------- |:---------------------------------------:| -----------:|
-| id               |  16 digit alpha / numeric assigned key  | null        |
-| type             |  default : student : teacher : admin    | default     |
-| first            |  string value                           | Guest       |
-| last             |  string value                           | User        |
-| isActive         |  true : false                           | false       |
-| info             |  userinfo object                        | null        |
+| Value            | Option                                            | Default     |
+| ---------------- |:-------------------------------------------------:| -----------:|
+| id               |  numeric auto assigned key                        | null        |
+| type             |  default : pending : student : teacher : admin    | default     |
+| first            |  string value                                     | Guest       |
+| last             |  string value                                     | User        |
+| email            |  string value                                     | null        |
+| active           |  true : false                                     | false       |
+| detail           |  detail object                                    | null        |
+| joined           |  Date object                                      | null        |
 
 
-**Value name passed to template** : userinfo
+**Value name passed to template** : detail
 
 | Value            | Option                                         | Default     |
 | ---------------- |:----------------------------------------------:| -----------:|
-| id               |  16 digit alpha / numeric assigned key         | null        |
-| sex              |  male | female | transgender | decline         | decline     |
-| gradeLevel       |  none | freshman | sophomore | junior | senior | freshman    |
-| gpa              |  decimal value (x.xxx)                         | 0.000       |
-| contact          |  contact object array                          | null        |
-| history          |  user history object                           | null        |
+| id               |  numeric auto assigned key                     | null        |
+| gender           |  male | female | transgender | decline         | decline     |
+| birth            |  Date Object                                   | null        |
+| contact          |  contact Object[array]                         | null        |
+| history          |  history Object                                | null        |
 
 
 **Value name passed to template** : contact
 
 | Value            | Option                                         | Default     |
 | ---------------- |:----------------------------------------------:| -----------:|
-| id               |  integer value                                 | null        |
+| id               |  numeric auto assigned key                     | null        |
+| type             |  home : mobile : work                          | null        |
+| phone            |  string value                                  | null        |
 | addr             |  string value                                  | null        |
 | addr2            |  string value                                  | null        |
 | city             |  string value                                  | null        |
 | state            |  string value                                  | null        |
 | zip              |  integer value                                 | null        |
+| country          |  string value                                  | null        |
 
 
-**Value name passed to template** : userhistory
+**Value name passed to template** : history
 
 | Value            | Option                                 | Default     |
 | ---------------- |:--------------------------------------:| -----------:|
-| id               | 16 digit alpha / numeric assigned key  | null        |
-| ge-institution   | transcript object                      | null        |
-| colg-trans       | transcript object array                | null        |
+| id               | numeric auto assigned key              | null        |
+| general          | transcript Object                      | null        |
+| college          | transcript Object[array]               | null        |
 
 
 **Value name passed to template** : transcript
 
 | Value            | Option                                  | Default     |
 | ---------------- |:---------------------------------------:| -----------:|
-| id               | integer value                           | null        |
-| name             | string value                            | null        |
+| id               | numeric auto assigned key               | null        |
+| school           | string value                            | null        |
 | city             | string value                            | null        |
 | state            | string value                            | null        |
 | gpa              | string value                            | null        |
  
  
 ### Course Schedule Objects
-**Value name passed to template** : session
-
-| Value            | Option                                     | Default     |
-| ---------------- |:------------------------------------------:| -----------:|
-| code             | 2 digit month - 2 digit year - length code | null        |
-| startDate        | date object                                | null        |
-| endDate          | date object                                | null        |
-
-
 **Value name passed to template** : schedule
 
 | Value            | Option                                | Default     |
 | ---------------- |:-------------------------------------:| -----------:|
-| session          | session object                        | null        |
-| section          | section object                        | null        |
-| dailyMeeting     | daily object                          | null        |
-| startTime        | date object                           | null        |
-| length           | integer value (ie 60 = 60 min)        | null        |
-| seats            | integer value                         | null        |
-| seatsTaken       | integer value                         | null        |
+| id               | numeric auto assigned key             | null        |
+| session          | session Object                        | null        |
+| course           | course Object                         | null        |
+| daily            | daily Object                          | null        |
+| start_time       | Date Object                           | null        |
+| min_length       | number value (ie 60 = 60 min)         | null        |
+| seats            | number value                          | null        |
+| location         | string value                          | null        |
+| instructor       | user Object                           | null        |
+
+
+**Value name passed to template** : session
+
+| Value            | Option                                     | Default     |
+| ---------------- |:------------------------------------------:| -----------:|
+| id               | numeric auto assigned key                  | null        |
+| code             | (4 digit year) - (alpha code)              | null        |
+| description      | string value                               | null        |
+| start            | Date Object                                | null        |
+| stop             | Date Object                                | null        |
+| active           | true : false                               | false       |
+| schedule         | schedule Object[array]                     | null        |
 
 
 **Value name passed to template** : daily
@@ -98,17 +108,20 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 
 | Value            | Option                               | Default     |
 | ---------------- |:------------------------------------:| -----------:|
-| code             | 3 char : integer value               | null        |
+| id               | numeric auto assigned key            | null        |
+| code             | 3 char : number value                | null        |
+| units            | number value                         | null        |
 | name             | string value                         | null        |
 | description      | string value                         | null        |
-| subject          | subject object                       | null        |
+| subject          | subject Object                       | null        |
+| requirements     | string value                         | null        |
 
 
 **Value name passed to template** : subject
 
 | Value            | Option                              | Default     |
 | ---------------- |:-----------------------------------:| -----------:|
-| code             | 3 char : string value               | null        |
+| code             | 3 char : (alpha code)               | null        |
 | name             | string value                        | null        |
 | description      | string value                        | null        |
 
@@ -119,10 +132,5 @@ Node.js and MongoDB both work with JSON data by default.  Data stores passed to 
 | Value            | Option                     | Default     |
 | ---------------- |:--------------------------:| -----------:|
 | name             | string value               | null        |
-| currentSession   | string value               | null        |
-| previousSession  | string value               | null        |
-| nextSession      | string value               | null        |
 | president        | string value               | null        |
-| city             | string value               | null        |
-| state            | string value               | null        |
-| zip              | integer value              | null        |
+| contact          | contact Object             | null        |

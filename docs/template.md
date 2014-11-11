@@ -184,3 +184,39 @@ This is used for selecting an existing option from a drop down list.
       option Data Value
       //- Content goes here.
 ```
+
+##### Jade JavaScript Usage
+Jade allows for shorthand of JavaScript to be easily integrated with HTML.
+
+###### Objects
+This is useful for tracking or simplifying the data your working with.
+
+```jade
+- var valueOne = 'Value One Title';
+- var valueTwo = {id:1, name:'value two'};
+- var valueThree = valueTwo.name;
+
+p #{valueOne}
+p #{valueTwo}
+p #{valueThree}
+```
+
+###### For Loop
+This is useful for creating list.  It treats the *i* value differently than JavaScript and holds the arrays current positions object instead of the position number.
+
+```jade
+ul
+  for i in arrayData
+    li #{i.value}
+```
+
+###### If Statements
+This is good for things like user type checks, if value exist and more.
+```jade
+if valueOne == valueTwo
+  //- Do something here if true
+else if valueThree
+  //- Do something here if value exist
+else
+  //- Do some default thing here  
+```

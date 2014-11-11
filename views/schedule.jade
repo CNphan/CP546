@@ -8,11 +8,13 @@ block css
   
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
+  script(src='/js/myschedule.js')
+  script(type='text/javascript').
+    var schedule = !{JSON.stringify(schedule)}
   
 //-Add navigation item to existing navigation set.
 block nav
   +navItem('#main','My schedule')
-  +navItem('#sec-two','My schedule')
   
 //-Add navigation item to existing Teacher navigation set.
 block navTeacher
@@ -22,6 +24,25 @@ block navStudent
   
 //-HTML content to display.
 block content
+  - var currentClassList;
+  #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="teach-class-list-title", aria-hidden="true")
+    form(role='form', method='POST', name='teach-class-list')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type="button", data-dismiss="modal")
+              span(aria-hidden="true")
+                | &times;
+                span.sr-only Close
+            h4#student-list-title.modal-title -Class Code- -Class Name-
+          .modal-body
+            input.grab(type='hidden', name='grab')
+            select.form-control(name='teach-class-list', multiple, size='10')
+              option None
+          .modal-footer
+            button.btn.btn-default(type="button", data-dismiss="modal") Close
+            button.dropListBtn.btn.btn-primary(type="button") Drop Student
+            button.viewHistoryListBtn.btn.btn-primary(type="button") View Class History
   section#main.container
     .row
       //-Columns in a row must equal 12. 
@@ -57,9 +78,9 @@ block content
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             if(user.type == 'student')
-              button.btn.btn-xs.btn-primary(type='button') Drop
+              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll 
+              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll 
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p Art 101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -83,9 +104,9 @@ block content
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             if(user.type == 'student')
-              button.btn.btn-xs.btn-primary(type='button') Drop
+              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll 
+              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll 
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p BIOL-102
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -110,9 +131,9 @@ block content
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             if(user.type == 'student')
-              button.btn.btn-xs.btn-primary(type='button') Drop
+              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll   
+              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll   
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p BIOL-102
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -130,30 +151,6 @@ block content
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p HS101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Majidz,H  
-      br
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        button.btn.btn-primary.btn-lg(data-toggle="modal", data-target="#student-list") Teachers Only 
-        #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
-          .modal-dialog
-            .modal-content
-              .modal-header
-                 button.close(type="button", data-dismiss="modal")
-                   span(aria-hidden="true")
-                     | &times;
-                     span.sr-only Close
-                 h4.student-list-title.modal-title -Class Code- -Class Name-
-              .modal-body
-                select.form-control(multiple, size='10')
-                  option Brandon L. CLark
-                  option Christie Phan
-                  option Hooman Rocks
-                  option Panki Soni
-              .modal-footer
-                button.btn.btn-default(type="button", data-dismiss="modal") Close
-                button.btn.btn-primary(type="button") Drop Student
-                button.btn.btn-primary(type="button") View Class History
-    
+            p Majidz,H      
 
 // End Jade Template

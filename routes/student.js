@@ -3,25 +3,48 @@ module.exports = function (data) {
 	var router = express.Router();
 	var backURL;
 	
-	router.get('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res) {
-		res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user });
+	router.get('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
+		res.redirect('/catalog/schedule');
+	}).post('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
+		data.schedule.getUserCourseHistory(req, function(err, history){
+			if(err){
+				console.log('You are receiving an empty (history) Object', {history: {schedule:{code: ''}, course:{code:''}}});
+				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+			}else{
+				console.log('You are receiving a (history) Object', history);
+				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: history });		
+			}
+		});
 	});
 	
 	/* GET/POST class to schedule page. */
 	router.get('/add', function (req, res, next){data.user.grant.StudentAdmin(req, res, next);}, function(req, res, next) {
-		res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user });
+		res.redirect('/catalog');
 	}).post('/add', function (req, res, next){data.user.grant.StudentAdmin(req, res, next);}, function(req, res, next) {
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		data.schedule.getCourseSchedule(req, function(err, schedule){
+			if(err){
+				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
+				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule:{code:'', course:{code:''}}});
+			} else {
+				console.log('You are receiving the (schedule) Object', schedule);
+				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule: schedule });
+			}
+		});
 	});
 	
 	/* GET/POST drop to schedule page. */
 	router.get('/drop', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
-		res.render('drop', { title: 'University Manager | Drop Class', user: req.session.user });
-	}).post('/drop', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
-		
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+		res.redirect('/catalog/schedule');
+	}).post('/drop', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {		
+		data.schedule.getUserSchedule(req, function(err, schedule){
+			if(err){
+				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
+				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user , schedule: {schedule:{code: ''}, course:{code:''}}});			
+			}else{
+				console.log('You are receiving the (schedule) Object', schedule);
+				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user, schedule: schedule });
+			}
+		});
 	});
 	
 	return router;

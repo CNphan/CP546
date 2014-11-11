@@ -7,11 +7,13 @@ block js
 //-Add navigation item to existing navigation set.
 block nav
   li
-    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') New User
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') New
   li
-    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') Reset Pass
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') Password
   li
-    a(data-toggle='collapse', data-parent="#accordion", data-target='#collapseTwo', href='#collapseTwo') Approve Student
+    a(data-toggle='collapse', data-parent="#accordion", data-target='#collapseFour', href='#collapseFour') De-Activate
+  li
+    a(data-toggle='collapse', data-parent="#accordion", data-target='#collapseTwo', href='#collapseTwo') Approve
 
 //-HTML content to display.
 block content
@@ -100,6 +102,28 @@ block content
                     input.form-control(name='value', placeholder='', type='input', autofocus, required)
                   br
                   button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Reset Password
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseFour")
+                  | Deactivate Account
+            #collapseFour.panel-collapse.collapse
+              .panel-body
+                form(role='form', method='POST', action='/credentials/create', id='deactivate_account')
+                  h3 User Name
+                  .input-group
+                    .input-group-addon First Name
+                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
+                  br
+                  .input-group
+                    .input-group-addon Last Name
+                    input.form-control(name='last', placeholder='', type='input', required)
+                  br
+                  .input-group
+                    .input-group-addon User ID
+                    input.form-control(name='id', placeholder='', type='input', required)
+                  br
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
           .panel.panel-default
             .panel-heading
               h4.panel-title

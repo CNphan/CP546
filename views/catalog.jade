@@ -8,7 +8,7 @@ link(rel='stylesheet',href='/css/mycss.css')
 
   
 //-JavaScript will be inserted at the end of the BODY tag.
-block jstop
+block js
   script(src='/js/catalog.js')
 
 //-Add navigation item to existing navigation set.
@@ -37,34 +37,26 @@ block content
      br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-4.col-sm-4.col-md-4.col-lg-4
-          h4 Fall 2014
-          img(src="http://www.csulb.edu/depts/enrollment/assets/img/buttonsSM/images/class_sched_fall.jpg", alt="Fall 2014")
-        .col-xs-4.col-sm-4.col-md-4.col-lg-4
-          h4 Winter Intersession 2014
-          img(src="http://www.csulb.edu/depts/enrollment/assets/img/buttonsSM/images/may_intersession.jpg", alt="Winter 2014")
-        .col-xs-4.col-sm-4.col-md-4.col-lg-4
-          h4 Spring 2015
-          img(src="http://www.csulb.edu/depts/enrollment/assets/img/buttonsSM/images/class_sched_spring_2005.jpg", alt="Winter 2014")
     br
     // show schedule 
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h3 #{catalog.description}
-        h4 #{monthNames[catalog.start.getMonth()]}  #{catalog.start.getYear()} - #{monthNames[catalog.stop.getMonth()]} #{catalog.stop.getYear()}
+        h4 #{monthNames[catalog.start.getMonth()]}  #{catalog.start.getFullYear()} - #{monthNames[catalog.stop.getMonth()]} #{catalog.stop.getFullYear()}
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         #accordion.panel-group
-          for n in catalog.subjects
-            .panel.panel-default
-              .panel-heading
-                h2.panel-title
-                  a(data-toggle="collapse", data-parent="#accordion", href="#" + n.code)
-                    h5 (#{n.code}) #{n.name}
-              .panel-collapse.collapse(id=n.code)
-                .panel-body
-                  form(role='form', method='POST', action='/student/add')
+          form(role='form', method='POST', action='/student/add', name='catalog')
+            input(type='hidden', value='', name='grab')
+            for n in catalog.subjects
+              .panel.panel-default
+                .panel-heading
+                  h2.panel-title
+                    a(data-toggle="collapse", data-parent="#accordion", href="#" + n.code)
+                      h5 (#{n.code}) #{n.name}
+                .panel-collapse.collapse(id=n.code)
+                  .panel-body
                     .col-xs-1.col-sm-1.col-md-1.col-lg-1
                       b CODE
                     .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -124,7 +116,7 @@ block content
                               p #{j.instructor.first.charAt(0)}. #{j.instructor.last}
                             if user.type == 'student'
                               .col-xs-1.col-sm-1.col-md-1.col-lg-1
-                                button.btn.btn-xs.btn-primary(type='button') Add
+                                button.dropBtn.btn.btn-xs.btn-primary(type='button', value=j.id) Add
                             if user.type == 'student'
                               .col-xs-2.col-sm-2.col-md-2.col-lg-2
                                 p #{j.course.requirements}

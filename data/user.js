@@ -23,7 +23,6 @@ module.exports.userCheck = function(req, res, next){
 	if(!req.session.user){
 		var sess = req.session;
 		sess.user = {first: 'Guest', last: 'User', type: 'guest'};
-		return res.redirect('/');
 	}
 	return next();
 };

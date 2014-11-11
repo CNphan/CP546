@@ -10,10 +10,10 @@ var schoolSessionSchema = mongoose.Schema({
     active:      {type: Boolean}
 });
 
-//db.schoolsessions.insert({code: '2014-FALL', description: 'Fall 2014 Schedule', start: ISODate("2014-05-30T01:11:18.965Z"), stop: ISODate("2014-12-16T01:11:18.965Z"), active:true})
-//db.schoolsessions.insert({code: '2014-Spring', description: 'Spring 2014 Schedule', start: ISODate("2014-01-30T01:11:18.965Z"), stop: ISODate("2014-05-01T01:11:18.965Z"), active:false})
-//db.schoolsessions.insert({code: '2015-FALL', description: 'Fall 2015 Schedule', start: ISODate("2015-05-30T01:11:18.965Z"), stop: ISODate("2015-12-16T01:11:18.965Z"), active:false})
-//db.schoolsessions.insert({code: '2015-Spring', description: 'Spring 2015 Schedule', start: ISODate("2015-01-30T01:11:18.965Z"), stop: ISODate("2015-05-01T01:11:18.965Z"), active:false})
+//db.schoolsessions.insert({_id: ObjectId("54584383a52715f4297ed41d"), code: '2014-FALL', description: 'Fall 2014 Schedule', start: new ISODate("2014-05-30T01:00:00Z"), stop: new ISODate("2014-12-16T01:00:00Z"), active:true})
+//db.schoolsessions.insert({_id: ObjectId("54584383a52715f4297ed41e"), code: '2014-Spring', description: 'Spring 2014 Schedule', start: new ISODate("2014-01-30T01:00:00Z"), stop: new ISODate("2014-05-01T01:00:00Z"), active:false})
+//db.schoolsessions.insert({_id: ObjectId("54584383a52715f4297ed41f"), code: '2015-FALL', description: 'Fall 2015 Schedule', start: new ISODate("2015-05-30T01:00:00Z"), stop: new ISODate("2015-12-16T01:00:00Z"), active:false})
+//db.schoolsessions.insert({_id: ObjectId("54584385a52715f4297ed420"), code: '2015-Spring', description: 'Spring 2015 Schedule', start: new ISODate("2015-01-30T01:00:00Z"), stop: new ISODate("2015-05-01T01:00:00Z"), active:false})
 
 //get data that should be returned.
 schoolSessionSchema.methods.getData = function(){

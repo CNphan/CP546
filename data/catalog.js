@@ -16,7 +16,7 @@ module.exports.create = function () {
 	
 	db.close();
 };
-
+ 
 module.exports.getCurrent = function (cb) {
 	findCatalog.current(function(err, data){
 		if(err){cb(err, null);return;}

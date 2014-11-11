@@ -8,5 +8,15 @@ var subjectSchema = mongoose.Schema({
     description: {type: String}
 });
 
+//get data that should be returned.
+subjectSchema.methods.getData = function(){
+	return {
+		id:          this._id,
+	    code:        this.code,
+	    name:        this.name,
+	    description: this.description
+	};
+};
+
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Subject', subjectSchema);

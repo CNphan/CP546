@@ -1,7 +1,7 @@
-# Page Linking
+# Interface Views: Description, Data & Security 
 The link structure will defined as such during development:
-* **ALL PAGES**
-  * **Data**: school, user
+* **ALL VIEWS**
+  * **Data**: user
   
 * **Home** | [localhost:3000](http://localhost:3000)
   * **File**: *index.jade*
@@ -14,7 +14,7 @@ The link structure will defined as such during development:
   * **File**: *catalog.jade*
   * **Desc**: This page displays the courses by each session(semester).
   * **Security**: unrestricted
-  * **Data**: schedule[array]
+  * **Data**: catalog
   * **Notes**
     * Show current session by subject.
     * If student show add course button if room exist.
@@ -25,70 +25,77 @@ The link structure will defined as such during development:
   * **Security**: Teacher & Student Only
   * **Data**: schedule[array]
   * **Notes**
-    * There should be no profile difference.
+    * If teacher the each array object will be given a student list array.
+    * If students should see a drop option.
+    * If teacher present student list with option to view each students history or drop each student in the course.
   
 * **Add Schedule** | [localhost:3000/catalog/addschedule](http://localhost:3000/catalog/addschedule)
   * **File**: *addschedule.jade*
   * **Desc**: This page allows administrators to assign a schedule to a course.
   * **Security**: Administrator Only
-  * **Data**: course[array]
+  * **Data**: courses[array]
   * **Notes**
     * Upon completion return to root page of process.
     * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* **Add Course** | [localhost:3000/catalog/addcourse](http://localhost:3000/catalog/addcourse)
+* **Add Course to Catalog Option** | [localhost:3000/catalog/addcourse](http://localhost:3000/catalog/addcourse)
   * **File**: *addcourse.jade*
   * **Desc**: This page allows administrators to create a course.
   * **Security**: Administrator Only
-  * **Data**: subject[array]
+  * **Data**: subjects[array]
   * **Notes**
     * Upon completion return to root page of process.
     * See [Data](#data-design) Design to understand the best way to manipulate data.
   
-* **Course Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
+* **Add Student to Course Request** | [localhost:3000/student/add](http://localhost:3000/student/add)
   * **File**: *addrequest.jade*
-  * **Desc**: This is a confirmation page, student reviews information and clicks add course button. Request is sent by catalog add course button only.
+  * **Desc**: This is a confirmation page, student reviews information and clicks add course button or cancel.
   * **Security**: Student Only
   * **Data**: schedule 
   * **Notes**
+    * If GET request redirect to Catalog.
     * Upon completion return to catalog page.
+    * Add request comes from catalog page.
   
-* **Drop Course** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
+* **Drop Student from Course** | [localhost:3000/student/drop](http://localhost:3000/student/drop)
   * **File**: *drop.jade*
-  * **Desc**: This is a confirmation page, student reviews information and clicks drop course button. Request is sent by schedule drop course button only.
+  * **Desc**: This is a confirmation page, student or teacher reviews information and clicks drop course button or cancel.
   * **Security**: Teacher & Student Only
   * **Data**: schedule 
   * **Notes**
+    * If GET request redirect to My Schedule.
     * Upon completion return to My Schedule.
+    * Drop request comes from student and teachers My Schedule.
   
-* **Student's History** | [localhost:3000/student/history](http://localhost:3000/student/history)
+* **Student's History Request** | [localhost:3000/student/history](http://localhost:3000/student/history)
   * **File**: *history.jade*
   * **Desc**: View a students history of courses taken and organize by session(semester). 
-  * **Data**: schedule[array]
+  * **Data**: history[array]
   * **Security**: All registered users.
-  
-* **Profile** | [localhost:3000/user/:id](http://localhost:3000/user/:id)
-  * **File**: *user.jade*
-  * **Desc**: This shows the user profile.
-  * **Security**: Registered Users
+  * **Notes**
+    * Teachers request student history from My Schedule > course student list.
+    * Present return button.
   
 * **Register** | [localhost:3000/credentials/register](http://localhost:3000/credentials/register)
   * **File**: *register.jade*
   * **Desc**: This allows a student to create a new account or apply for the session(semester).
   * **Security**: unrestricted
+  * **Notes**
+    * If registered user should display application status for students.
+    * Administrators and teachers should be direct to a message telling them to contact their superiors.
   
-* **Add User** | [localhost:3000/credentials/add](http://localhost:3000/credentials/add)
-  * **File**: *adduser.jade*
-  * **Desc**: This page allows administrators to approve registration of students and add new user profiles.
+* **Add User, Change Password, Approve Applicants and DeAuthorize Accounts** | [localhost:3000/credentials/add](http://localhost:3000/credentials/manage)
+  * **File**: *manageusers.jade*
+  * **Desc**: This page allows administrators to approve registration, change user passwords, deactivate users, and add new user profiles.
   * **Security**: Administrator Only
-  * **Data**: userpool[array]
+  * **Data**: applicants[array]
   * **Notes**
     * Upon form submit return to process.
   
 * **De-Activate User** | [localhost:3000/credentials/deactivate](http://localhost:3000/credentials/deactivate)
   * **File**: *deactivate.jade*
-  * **Desc**: This allows a administrator to deactivate a profiles authorization.
+  * **Desc**: This is a confirmation page, reviews information and clicks confirm or cancel button.
   * **Security**: Administrator Only
-  * **Data**: userpool[array]
+  * **Data**: useraccount
   * **Notes**
     * Upon completion return to root page of process.

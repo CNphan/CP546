@@ -20,11 +20,9 @@ module.exports.current = function(cb){
 module.exports.catalog = function(id, cb){
 	var catalog = [];
 	
-	db.open('school');
 	Catalog
 		.findOne({code:id})
 		.exec(function(err, data){
-			db.close();
 			if(err){cb(err,null);return;}
 			
 			catalog = data.getData();

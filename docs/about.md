@@ -15,3 +15,6 @@ This web application manages aspects of a university.  The user profiles managed
 * Add new student/teacher/administrator profiles.
 * Deactivate profiles but not delete them.
 * Schedule courses at the university.
+
+##Download Data Sheet
+[Data Sheet Download](team-plan.docx)
