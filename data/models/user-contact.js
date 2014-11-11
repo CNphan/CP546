@@ -32,3 +32,5 @@ userContactSchema.methods.getData = function(){
 // create the model for users and expose it to our app
 module.exports = mongoose.model('UserContact', userContactSchema);
 
+//db.usercontacts.insert({ "type" : "home", "phone" : "123-123-1234", "addr" : "123 UM Drive", "addr_2" : "", "state" : "California", "zip" : "12345", "country" : "USA", "_id" : ObjectId("5453fcdbc6650dc4101d3628") })
+//db.usercontacts.insert({ "type" : "home", "mobile" : "321-321-4321", "addr" : "123 UM Drive", "addr_2" : "", "state" : "California", "zip" : "12345", "country" : "USA", "_id" : ObjectId("5453fd1fc6650dc4101d362f") })

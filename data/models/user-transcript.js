@@ -22,3 +22,8 @@ UserTranscriptSchema.methods.getData = function(){
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('UserTranscript', UserTranscriptSchema);
+
+//db.usertranscripts.insert({ "school" : "High School Deploma", "city" : "Hometown", "state" : "California", "gpa" : "3.0", "_id" : ObjectId("5453fcdbc6650dc4101d3625") })
+//db.usertranscripts.insert({ "school" : "AA Degree Program", "gpa" : "3.5", "_id" : ObjectId("5453fcdbc6650dc4101d3626") })
+//db.usertranscripts.insert({ "school" : "High School Deploma", "city" : "Hometown", "state" : "California", "gpa" : "3.0", "_id" : ObjectId("5453fd1fc6650dc4101d362c") })
+//db.usertranscripts.insert({ "school" : "AA Degree Program", "gpa" : "3.5", "_id" : ObjectId("5453fd1fc6650dc4101d362d") })

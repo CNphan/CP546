@@ -20,3 +20,7 @@ subjectSchema.methods.getData = function(){
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Subject', subjectSchema);
+
+
+//db.subjects.insert({ "_id" : ObjectId("5456580ff1832e26bc308e18"), "code" : "CIS", "name" : "Computer Information Systems", "description" : "Focus is on practical applications of technology to support organizations while adding value to their offerings." })
+//db.subjects.insert({ "_id" : ObjectId("545658a4f1832e26bc308e19"), "code" : "MIS", "name" : "Management Information Systems", "description" : "The study of how individuals, groups, and organizations evaluate, design, implement, manage, and utilize systems to generate information to improve efficiency and effectiveness of decision making, including systems termed decision support systems, expert systems, and executive information systems." })

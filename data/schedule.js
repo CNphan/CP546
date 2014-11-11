@@ -129,9 +129,11 @@ module.exports.getUserCourseHistory = function (req, cb){
 
 module.exports.getUserSchedule = function(req, cb){
 	db.open('user');
+	console.log(req.body.grab);
 	UserSchedule
 		.findOne({_id:req.body.grab})
 		.exec(function(err, data){
+			console.log(err, data);
 			db.close();
 			if(err){cb(err,null);return;}
 			

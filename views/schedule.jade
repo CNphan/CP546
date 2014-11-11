@@ -73,84 +73,33 @@ block content
           b LOC
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b INST
-      br
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            if(user.type == 'student')
-              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
-            else if(user.type=='teacher')
-              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll 
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Art 101
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 1
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p A01
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p SEM
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p MW
-          .col-xs-2.col-sm-2.col-md-2.col-lg-2
-            p 8-9:15AM
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 3
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p AR 101
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Phan,C
-      br
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            if(user.type == 'student')
-              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
-            else if(user.type=='teacher')
-              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll 
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p BIOL-102
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 1
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p B01
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p LEC
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p TTh
-          .col-xs-2.col-sm-2.col-md-2.col-lg-2
-            p 8-9:15AM
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 3
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p HS101
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Clark,B 
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1  
-      br
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            if(user.type == 'student')
-              button.dropBtn.btn.btn-xs.btn-primary(type='button', value='545d744bd75394ddb809c448') Drop
-            else if(user.type=='teacher')
-              button.studentsBtn.btn.btn-xs.btn-primary(value=0, type='button',data-toggle="modal", data-target="#student-list") Roll   
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p BIOL-102
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 2
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p B02
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p LAB
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p TTh
-          .col-xs-2.col-sm-2.col-md-2.col-lg-2
-            p 9:30-10:45AM
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p 1
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p HS101
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Majidz,H      
-
+      - var j = 0;
+      for i in schedule
+        br
+        .row
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              if(user.type == 'student')
+                button.dropBtn.btn.btn-xs.btn-primary(type='button', value=i.id) Drop
+              else if(user.type=='teacher')
+                button.studentsBtn.btn.btn-xs.btn-primary(value=j, type='button',data-toggle="modal", data-target="#student-list") Roll
+            - j++; 
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p #{i.course.code}
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p 1
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p A01
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p SEM
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p MW
+            .col-xs-2.col-sm-2.col-md-2.col-lg-2
+              p 
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p 3
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p 
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1
+              p 
 // End Jade Template

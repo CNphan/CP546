@@ -2,7 +2,6 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 var UserContact = require('./user-contact');
-var SchoolSession = require('./school-session');
 
 // define the schema for our user model
 var schoolSchema = mongoose.Schema({
