@@ -8,7 +8,7 @@ Project has a deadline of *December 12, 2014*.
 #### Team Members
 * Brandon L. Clark
 * Hooman 
-* Christie Pham
+* Christie Phan
 * Panki Soni
 
 #### Documentation
